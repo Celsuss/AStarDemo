@@ -11,21 +11,21 @@ GraphicManager* GraphicManager::getInstance(){
 }
 
 void GraphicManager::initialize(){
-	getInstance()->m_Window.create(sf::VideoMode(1200, 900), "InvasionZx2");
+	getInstance()->m_Window.create(sf::VideoMode(900, 600), "A* demo");
 	getInstance()->m_Window.setFramerateLimit(60);		//Set max fps tp 60
 }
 
 void GraphicManager::update(){
-	drawBackGround();
-	drawNormalGround();
-	drawForeGround();
-
 	getInstance()->m_Window.display();
 	getInstance()->m_Window.clear();
 }
 
-void GraphicManager::draw(sf::Sprite sprite){
-	
+void GraphicManager::draw(sf::Sprite& sprite){
+	getInstance()->m_Window.draw(sprite);
+}
+
+void GraphicManager::draw(sf::RectangleShape& rectangleShape){
+	getInstance()->m_Window.draw(rectangleShape);
 }
 
 sf::RenderWindow* GraphicManager::getWindow(){

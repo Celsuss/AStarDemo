@@ -11,7 +11,8 @@ public:
 	static void initialize();
 	static void update();
 
-	static void draw(sf::Sprite sprite);
+	static void draw(sf::Sprite& sprite);
+	static void draw(sf::RectangleShape& rectangleShape);
 	static sf::RenderWindow* getWindow();
 private:
 	GraphicManager();
