@@ -10,7 +10,9 @@ public:
 	virtual void draw();
 private:
 	void walk();
+	void normalizeVector2f(sf::Vector2f& vec);
 
+	float m_Speed;
 	sf::Sprite* m_pSprite;
 	Pathfinder::PositionVector m_Path;
 };

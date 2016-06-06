@@ -133,12 +133,17 @@ void GridManager::draw(){
 
 void GridManager::setNodesIsWalkable(Game* pGame){
 	Game::GameObjectVector* objects = pGame->getGameObjects();;
-	for (int i = 0; i < m_GridTileMatrix.size(); i++){
-		for (int j = 0; j < m_GridTileMatrix[i].size(); j++){
+	for (int i = 0; i < getInstance()->m_GridTileMatrix.size(); i++){
+		for (int j = 0; j < getInstance()->m_GridTileMatrix[i].size(); j++){
+			if (j == getInstance()->m_GridTileMatrix[i].size() - 1){
+				if (i == 2)
+					int kalle = 0;
+			}
+
 			for (auto it = objects->begin(); it != objects->end(); it++){
 				if ((*it)->getGameObjectType() == GameObject::Type::Wall){
-					if (getWallNodeCollision(m_GridTileMatrix[i][j], (Wall*)*it)){
-						m_GridTileMatrix[i][j]->setIsWalkable(false);
+					if (getInstance()->getWallNodeCollision(getInstance()->m_GridTileMatrix[i][j], (Wall*)*it)){
+						getInstance()->m_GridTileMatrix[i][j]->setIsWalkable(false);
 					}
 				}
 			}
@@ -147,19 +152,26 @@ void GridManager::setNodesIsWalkable(Game* pGame){
 }
 
 bool GridManager::getWallNodeCollision(GridNode* pNode, Wall* pWall){
+	int hight1 = pNode->getSprite()->getLocalBounds().height;
+
 	int x1Min = pNode->getPosition()->x;
 	int x1Max = x1Min + pNode->getSprite()->getLocalBounds().width;
 	int y1Min = pNode->getPosition()->y;
-	int y1Max = x1Min + pNode->getSprite()->getLocalBounds().height;
+	int y1Max = y1Min + pNode->getSprite()->getLocalBounds().height;
 
-	int x2Min = pWall->getPosition()->x;
-	int x2Max = x2Min + pWall->getShape()->getLocalBounds().width;
-	int y2Min = pWall->getPosition()->y;
-	int y2Max = y2Min + pWall->getShape()->getLocalBounds().height;
+	int wallMinusSize = 5;
+	int x2Min = pWall->getPosition()->x + wallMinusSize;
+	int x2Max = x2Min + pWall->getShape()->getLocalBounds().width - (wallMinusSize*2);
+	int y2Min = pWall->getPosition()->y + wallMinusSize;
+	int y2Max = y2Min + pWall->getShape()->getLocalBounds().height - (wallMinusSize*2);
 
 	// Collision tests
 	if (x1Max < x2Min || x1Min > x2Max) return false;
 	if (y1Max < y2Min || y1Min > y2Max) return false;
+
+	if (y1Min > 4 * 25 && x1Min == 25 * 25){
+		int kalle = 0;
+	}
 
 	return true;
 }

@@ -8,7 +8,6 @@ public:
 	Wall(sf::Vector2f pos, int width, int height);
 	virtual ~Wall();
 
-	//virtual void addCollision(GameObject* obj);
 	void draw();
 	sf::RectangleShape* getShape();
 private:

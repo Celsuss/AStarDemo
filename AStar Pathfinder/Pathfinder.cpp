@@ -1,7 +1,5 @@
 #include "Pathfinder.h"
-#include "PositionData.h"
 #include "GridNode.h"
-
 #include <iostream>
 
 Pathfinder* Pathfinder::m_Instance = new Pathfinder();
@@ -69,8 +67,6 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 							openList.back()->setParentNode(closedList.back());
 						}
 					}
-					else
-						int s = 0;
 				}
 				gridPos.x++;
 			}
@@ -90,7 +86,7 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 	while (true){
 		std::cout << loopTurn << " ";
 		if (returnNode->getParentNode() != nullptr){
-			returnList.push_back(returnNode->getPositionData()->getPosition());
+			returnList.push_back(returnNode->getPosition());
 			prevNode = returnNode;
 			returnNode = returnNode->getParentNode();
 		}

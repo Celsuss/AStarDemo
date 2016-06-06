@@ -19,6 +19,7 @@ void Game::update(){
 	GraphicManager::initialize();
 	GridManager::initialize(this);
 	createWalls();
+	GridManager::setNodesIsWalkable(this);
 	m_GameObjects.push_back(new Goal(sf::Vector2f((sf::Vector2f)GraphicManager::getWindow()->getSize() - sf::Vector2f(150, 150))));
 	m_GameObjects.push_back(new AI(sf::Vector2f(150, 150), *getGoal()->getPosition()));
 

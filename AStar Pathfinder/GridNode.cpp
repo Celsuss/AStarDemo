@@ -51,11 +51,15 @@ float GridNode::getFCost(){
 }
 
 bool GridNode::isWalkable(){
+	if (!m_IsWalkable)
+		int kalle = 0;
 	return m_IsWalkable;
 }
 
 void GridNode::setIsWalkable(bool walkable){
 	m_IsWalkable = walkable;
+	if (!walkable)
+		m_pSprite->setTexture(*TextureManager::getInstance()->getTexture("Grid_R"));
 }
 
 void GridNode::setGCost(float g){
