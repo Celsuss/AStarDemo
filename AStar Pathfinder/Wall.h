@@ -10,6 +10,7 @@ public:
 
 	//virtual void addCollision(GameObject* obj);
 	void draw();
+	sf::RectangleShape* getShape();
 private:
 	sf::RectangleShape m_Rectangle;
 };

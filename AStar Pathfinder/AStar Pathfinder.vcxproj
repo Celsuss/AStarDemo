@@ -138,6 +138,7 @@
     <ClCompile Include="GridManager.cpp" />
     <ClCompile Include="GridNode.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
@@ -149,6 +150,7 @@
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="GridManager.h" />
     <ClInclude Include="GridNode.h" />
+    <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>

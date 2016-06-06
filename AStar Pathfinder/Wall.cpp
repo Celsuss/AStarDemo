@@ -18,3 +18,7 @@ Wall::~Wall(){}
 void Wall::draw(){
 	GraphicManager::draw(m_Rectangle);
 }
+
+sf::RectangleShape* Wall::getShape(){
+	return &m_Rectangle;
+}

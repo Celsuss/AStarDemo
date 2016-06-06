@@ -17,10 +17,10 @@ void Game::run(){
 
 void Game::update(){
 	GraphicManager::initialize();
-	GridManager::initialize();
+	GridManager::initialize(this);
 	createWalls();
-	m_GameObjects.push_back(new AI(sf::Vector2f(150, 150)));
 	m_GameObjects.push_back(new Goal(sf::Vector2f((sf::Vector2f)GraphicManager::getWindow()->getSize() - sf::Vector2f(150, 150))));
+	m_GameObjects.push_back(new AI(sf::Vector2f(150, 150), *getGoal()->getPosition()));
 
 	while (GraphicManager::getWindow()->isOpen()){
 		handleEvents();
@@ -42,6 +42,18 @@ void Game::update(){
 
 		GraphicManager::update();
 		//----
+	}
+}
+
+Game::GameObjectVector* Game::getGameObjects(){
+	return &m_GameObjects;
+}
+
+Goal* Game::getGoal(){
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); it++){
+		if ((*it)->getGameObjectType() == GameObject::Type::Goal){
+			return (Goal*)*it;
+		}
 	}
 }
 

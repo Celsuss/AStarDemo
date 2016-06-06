@@ -1,6 +1,9 @@
 #include "GridManager.h"
 #include "GraphicManager.h"
+#include "GameObject.h"
 #include "GridNode.h"
+#include "Game.h"
+#include "Wall.h"
 #include <time.h>
 
 GridManager* GridManager::m_Instance = new GridManager();
@@ -13,7 +16,7 @@ GridManager* GridManager::getInstance(){
 	return m_Instance;
 }
 
-void GridManager::initialize(){
+void GridManager::initialize(Game* pGame){
 	srand(time(NULL));
 	sf::Vector2f startPos = sf::Vector2f(25, 25);
 	sf::Vector2f endPos = (sf::Vector2f)GraphicManager::getWindow()->getSize() - sf::Vector2f(25, 25);
@@ -41,7 +44,7 @@ void GridManager::initialize(){
 	}
 
 	getInstance()->m_GridSize = new sf::Vector2f(gridPos);
-	//getInstance()->setNodesIsWalkable(level);
+	getInstance()->setNodesIsWalkable(pGame);
 }
 
 void GridManager::update(){
@@ -128,13 +131,35 @@ void GridManager::draw(){
 	}
 }
 
-void GridManager::setNodesIsWalkable(Level* level){
-	/*for (int i = 0; i < m_GridTileMatrix.size(); i++){
+void GridManager::setNodesIsWalkable(Game* pGame){
+	Game::GameObjectVector* objects = pGame->getGameObjects();;
+	for (int i = 0; i < m_GridTileMatrix.size(); i++){
 		for (int j = 0; j < m_GridTileMatrix[i].size(); j++){
-			Level::WallVector wallVector = level->getWallVector();
-			for (auto k = wallVector.begin(); k != wallVector.end(); k++){
-				CollisionDetectionManager::getNodeCollideWithWall(m_GridTileMatrix[i][j], *k);
+			for (auto it = objects->begin(); it != objects->end(); it++){
+				if ((*it)->getGameObjectType() == GameObject::Type::Wall){
+					if (getWallNodeCollision(m_GridTileMatrix[i][j], (Wall*)*it)){
+						m_GridTileMatrix[i][j]->setIsWalkable(false);
+					}
+				}
 			}
 		}
-	}*/
+	}
+}
+
+bool GridManager::getWallNodeCollision(GridNode* pNode, Wall* pWall){
+	int x1Min = pNode->getPosition()->x;
+	int x1Max = x1Min + pNode->getSprite()->getLocalBounds().width;
+	int y1Min = pNode->getPosition()->y;
+	int y1Max = x1Min + pNode->getSprite()->getLocalBounds().height;
+
+	int x2Min = pWall->getPosition()->x;
+	int x2Max = x2Min + pWall->getShape()->getLocalBounds().width;
+	int y2Min = pWall->getPosition()->y;
+	int y2Max = y2Min + pWall->getShape()->getLocalBounds().height;
+
+	// Collision tests
+	if (x1Max < x2Min || x1Min > x2Max) return false;
+	if (y1Max < y2Min || y1Min > y2Max) return false;
+
+	return true;
 }

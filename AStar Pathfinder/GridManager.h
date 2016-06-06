@@ -2,8 +2,9 @@
 #include "SFML/System/Vector2.hpp"
 #include <vector>
 
+class Wall;
+class Game;
 class GridNode;
-class Level;
 
 class GridManager{
 public:
@@ -11,7 +12,7 @@ public:
 	typedef std::vector<GridNodeVector>GridNodeMatrix;
 
 	static GridManager* getInstance();
-	static void initialize();
+	static void initialize(Game* pGame);
 	static void update();
 	static void clearValues();
 	static GridNode* getRandomNode();
@@ -25,7 +26,8 @@ private:
 	static GridManager* m_Instance;
 
 	void draw();
-	void setNodesIsWalkable(Level* level);
+	void setNodesIsWalkable(Game* pGame);
+	bool getWallNodeCollision(GridNode* pNode, Wall* pWall);
 
 	GridNodeMatrix m_GridTileMatrix;
 	sf::Vector2f* m_GridSize;

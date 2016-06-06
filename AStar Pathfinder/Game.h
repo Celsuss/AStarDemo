@@ -10,6 +10,9 @@ public:
 	Game();
 	~Game();
 	void run();
+
+	GameObjectVector* getGameObjects();
+	Goal* getGoal();
 private:
 	void update();
 	void handleEvents();
