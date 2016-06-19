@@ -17,7 +17,9 @@ public:
 private:
 	void update();
 	void handleEvents();
+	void handleInput();
 	void createWalls();
 
+	//bool m_
 	GameObjectVector m_GameObjects;
 };

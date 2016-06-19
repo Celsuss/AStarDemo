@@ -11,6 +11,7 @@ public:
 private:
 	void walk();
 	void normalizeVector2f(sf::Vector2f& vec);
+	void drawPath();
 
 	float m_Speed;
 	sf::Sprite* m_pSprite;

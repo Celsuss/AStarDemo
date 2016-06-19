@@ -25,6 +25,7 @@ void Game::update(){
 
 	while (GraphicManager::getWindow()->isOpen()){
 		handleEvents();
+		handleInput();
 
 		//----
 		//Debug::clear();
@@ -64,6 +65,10 @@ void Game::handleEvents(){
 		if (event.type == sf::Event::Closed)
 			GraphicManager::getWindow()->close();
 	}
+}
+
+void Game::handleInput(){
+
 }
 
 void Game::createWalls(){

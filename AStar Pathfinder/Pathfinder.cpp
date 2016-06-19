@@ -25,10 +25,8 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 
 	bool loop = true;
 	int loopTurn = 0;
-	std::cout << "(1) ";
 
 	while (loop){
-		std::cout << loopTurn << " ";
 
 		closedList.push_back(getNodeWithLowestFCost(&openList));
 		auto eraseThis = getIteratorWithlowestFCost(&openList);
@@ -72,10 +70,8 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 			}
 			gridPos.y++;
 		}
-		int s = 0;
 		loopTurn++;
 	}
-	std::cout << " (1)\n(2)";
 
 	PositionVector returnList;
 
@@ -84,7 +80,6 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 	GridNode* prevNode = nullptr;
 	loopTurn = 0;
 	while (true){
-		std::cout << loopTurn << " ";
 		if (returnNode->getParentNode() != nullptr){
 			returnList.push_back(returnNode->getPosition());
 			prevNode = returnNode;
@@ -94,10 +89,8 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 			break;
 		loopTurn++;
 	}
-	std::cout << " (2)\n\n";
 
 	GridManager::clearValues();
-	//return *prevNode->getPositionData()->getPosition();
 	return returnList;
 }
 
@@ -151,7 +144,11 @@ bool Pathfinder::isInOpenList(GridManager::GridNodeVector* openList, GridNode* c
 
 float Pathfinder::calculateGCost(int i, int j, GridManager::GridNodeVector* closedList){
 	float gCost = 10;
-	if ((i == 0 || i == 2) && (j == 0 || j == 2))
+	/*if ((i == 0 || i == 2) && (j == 0 || j == 2))
+		gCost = 14;*/
+	/*if ((i == -1 || i == 1) && (j == -1 || j == 1))
+		gCost = 14;*/
+	if (i != 0 && j != 0)
 		gCost = 14;
 	if (closedList->back()->getParentNode() != nullptr)
 		gCost += closedList->back()->getParentNode()->getGCost();

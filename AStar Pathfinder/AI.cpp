@@ -16,6 +16,7 @@ AI::~AI(){}
 void AI::draw(){
 	walk();
 	m_pSprite->setPosition(m_Position);
+	drawPath();
 	GraphicManager::draw(*m_pSprite);
 }
 
@@ -35,5 +36,21 @@ void AI::normalizeVector2f(sf::Vector2f& vec){
 	if (length != 0){
 		vec.x /= length;
 		vec.y /= length;
+	}
+}
+
+void AI::drawPath(){
+	if (m_Path.size() < 2)
+		return;
+
+	for (int i = 0; i < m_Path.size()-1; i++){
+		sf::Vertex line[] =
+		{
+			sf::Vertex(sf::Vector2f(m_Path[i]->x, m_Path[i]->y)),
+			sf::Vertex(sf::Vector2f(m_Path[i + 1]->x, m_Path[i+1]->y))
+		};
+		line[0].color = sf::Color::Blue;
+		line[1].color = sf::Color::Blue;
+		GraphicManager::getWindow()->draw(line, 2, sf::Lines);
 	}
 }
