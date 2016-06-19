@@ -15,7 +15,7 @@ Wall::Wall(sf::Vector2f pos, int width, int height){
 Wall::~Wall(){}
 
 void Wall::draw(){
-	GraphicManager::draw(m_Rectangle);
+	GraphicManager::getInstance()->draw(m_Rectangle);
 }
 
 sf::RectangleShape* Wall::getShape(){

@@ -12,21 +12,17 @@ Pathfinder* Pathfinder::getInstance(){
 	return m_Instance;
 }
 
-Pathfinder::PositionVector Pathfinder::findPath(sf::Vector2f startPos, sf::Vector2f endPos){
-	return getInstance()->getPath(startPos, endPos);
-}
-
 Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector2f endPos){
-	GridNode* endNode = GridManager::getNode(endPos);
+	GridNode* endNode = GridManager::getInstance()->getNode(endPos);
 	GridManager::GridNodeVector openList;
 	GridManager::GridNodeVector closedList;
-	openList.push_back(GridManager::getNode(startPos));
+	openList.push_back(GridManager::getInstance()->getNode(startPos));
 	sf::Vector2f gridPos(*openList.back()->getGridPosition());
 
 	bool loop = true;
 	int loopTurn = 0;
 
-	while (loop){
+	while (loop && loopTurn < 1000){
 
 		closedList.push_back(getNodeWithLowestFCost(&openList));
 		auto eraseThis = getIteratorWithlowestFCost(&openList);
@@ -38,14 +34,14 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 			break;
 		}
 
-		int gridWidth = GridManager::getGridSize()->x - 1;
-		int gridHeight = GridManager::getGridSize()->y - 1;
+		int gridWidth = GridManager::getInstance()->getGridSize()->x - 1;
+		int gridHeight = GridManager::getInstance()->getGridSize()->y - 1;
 
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				sf::Vector2f neightborGridPos(closedList.back()->getGridPosition()->x + i, closedList.back()->getGridPosition()->y + j);
 				if (neightborGridPos.x >= 0 && neightborGridPos.x <= gridWidth && neightborGridPos.y >= 0 && neightborGridPos.y <= gridHeight){
-					GridNode* neighborNode = GridManager::getMatrixNode(neightborGridPos);
+					GridNode* neighborNode = GridManager::getInstance()->getMatrixNode(neightborGridPos);
 					if (!(i == 0 && j == 0) && neighborNode->isWalkable()){
 						float gCost = calculateGCost(i, j, &closedList);
 						float hCost = calculateHCost(neighborNode, endNode);
@@ -75,7 +71,7 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 
 	PositionVector returnList;
 
-	GridNode* startNode = GridManager::getNode(startPos);
+	GridNode* startNode = GridManager::getInstance()->getNode(startPos);
 	GridNode* returnNode = endNode;
 	GridNode* prevNode = nullptr;
 	loopTurn = 0;
@@ -90,7 +86,7 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 		loopTurn++;
 	}
 
-	GridManager::clearValues();
+	GridManager::getInstance()->clearValues();
 	return returnList;
 }
 

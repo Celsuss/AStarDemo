@@ -18,7 +18,7 @@ GridNode::GridNode(sf::Vector2f pos, sf::Vector2f gridPos){
 GridNode::~GridNode(){}
 
 void GridNode::draw(){
-	GraphicManager::draw(*m_pSprite);
+	GraphicManager::getInstance()->draw(*m_pSprite);
 }
 
 sf::Sprite* GridNode::getSprite(){

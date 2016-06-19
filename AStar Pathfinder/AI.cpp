@@ -7,8 +7,8 @@ AI::AI(sf::Vector2f pos, sf::Vector2f targetPos){
 	m_Position = pos;
 	m_pSprite = new sf::Sprite(*TextureManager::getInstance()->getTexture("AI"));
 	m_pSprite->setPosition(pos);
-	m_Speed = 10;
-	m_Path = Pathfinder::findPath(m_Position, targetPos);
+	m_Speed = 15;
+	m_Path = Pathfinder::getInstance()->getPath(m_Position, targetPos);
 }
 
 AI::~AI(){}
@@ -17,7 +17,7 @@ void AI::draw(){
 	walk();
 	m_pSprite->setPosition(m_Position);
 	drawPath();
-	GraphicManager::draw(*m_pSprite);
+	GraphicManager::getInstance()->draw(*m_pSprite);
 }
 
 void AI::walk(){
@@ -43,7 +43,7 @@ void AI::drawPath(){
 	if (m_Path.size() < 2)
 		return;
 
-	sf::Vector2f nodeSize = GridManager::getGridNodeSize();
+	sf::Vector2f nodeSize = GridManager::getInstance()->getGridNodeSize();
 
 	for (int i = 0; i < m_Path.size()-1; i++){
 		sf::Vertex line[] =
@@ -53,6 +53,6 @@ void AI::drawPath(){
 		};
 		line[0].color = sf::Color::Blue;
 		line[1].color = sf::Color::Blue;
-		GraphicManager::getWindow()->draw(line, 2, sf::Lines);
+		GraphicManager::getInstance()->getWindow()->draw(line, 2, sf::Lines);
 	}
 }

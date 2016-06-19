@@ -8,20 +8,21 @@ public:
 	typedef std::vector<sf::Drawable*>DrawableList;
 
 	static GraphicManager* getInstance();
-	static void initialize();
-	static void update();
+	void initialize();
+	void update();
 
-	static void draw(sf::Sprite& sprite);
-	static void draw(sf::RectangleShape& rectangleShape);
-	static sf::RenderWindow* getWindow();
+	void draw(sf::Text& text);
+	void draw(sf::Sprite& sprite);
+	void draw(sf::RectangleShape& rectangleShape);
+	sf::RenderWindow* getWindow();
 private:
 	GraphicManager();
 	~GraphicManager();
 	static GraphicManager* m_Instance;
 
-	static void drawBackGround();
-	static void drawNormalGround();
-	static void drawForeGround();
+	void drawBackGround();
+	void drawNormalGround();
+	void drawForeGround();
 
 	sf::RenderWindow m_Window;
 	DrawableList m_Background;

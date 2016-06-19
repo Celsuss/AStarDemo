@@ -12,5 +12,5 @@ Goal::Goal(sf::Vector2f pos){
 Goal::~Goal(){}
 
 void Goal::draw(){
-	GraphicManager::draw(*m_pSprite);
+	GraphicManager::getInstance()->draw(*m_pSprite);
 }

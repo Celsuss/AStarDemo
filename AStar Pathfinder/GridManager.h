@@ -12,16 +12,16 @@ public:
 	typedef std::vector<GridNodeVector>GridNodeMatrix;
 
 	static GridManager* getInstance();
-	static void initialize(Game* pGame);
-	static void update();
-	static void clearValues();
-	static GridNode* getRandomNode();
-	static GridNode* getRandomNodeWithinRange(sf::Vector2f pos, int range);
-	static GridNode* getNode(sf::Vector2f pos);
-	static GridNode* getMatrixNode(sf::Vector2f gridPos);
-	static sf::Vector2f* getGridSize();
-	static sf::Vector2f& getGridNodeSize();
-	static void setNodesIsWalkable(Game* pGame);
+	void initialize(Game* pGame);
+	void update();
+	void clearValues();
+	GridNode* getRandomNode();
+	GridNode* getRandomNodeWithinRange(sf::Vector2f pos, int range);
+	GridNode* getNode(sf::Vector2f pos);
+	GridNode* getMatrixNode(sf::Vector2f gridPos);
+	sf::Vector2f* getGridSize();
+	sf::Vector2f& getGridNodeSize();
+	void setNodesIsWalkable(Game* pGame);
 private:
 	GridManager();
 	~GridManager();

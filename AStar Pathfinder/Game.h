@@ -1,4 +1,8 @@
 #pragma once
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/Text.hpp"
+#include "SFML/System/Clock.hpp"
+#include "SFML/System/Time.hpp"
 #include <vector>
 
 class Goal;
@@ -16,12 +20,18 @@ public:
 	Goal* getGoal();
 private:
 	void update();
+	void initialize();
 	void handleEvents();
-	void handleInput();
 	void createWalls();
 	void createSurrondingWalls();
 	void createRandomWalls();
+	void updateDeltaTime();
 
-	//bool m_
 	GameObjectVector m_GameObjects;
+	sf::Font m_Font;
+	sf::Text m_Text;
+	sf::Text m_DTimerText;
+	sf::Clock m_Clock;
+	sf::Time m_LastTime;
+	float m_DeltaTime;
 };

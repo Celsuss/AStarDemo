@@ -11,23 +11,27 @@ GraphicManager* GraphicManager::getInstance(){
 }
 
 void GraphicManager::initialize(){
-	getInstance()->m_Window.create(sf::VideoMode(900, 600), "A* demo");
-	getInstance()->m_Window.setFramerateLimit(60);		//Set max fps tp 60
+	m_Window.create(sf::VideoMode(900, 600), "A* demo");
+	m_Window.setFramerateLimit(60);		//Set max fps tp 60
 }
 
 void GraphicManager::update(){
-	getInstance()->m_Window.display();
-	getInstance()->m_Window.clear();
+	m_Window.display();
+	m_Window.clear();
+}
+
+void GraphicManager::draw(sf::Text& text){
+	m_Window.draw(text);
 }
 
 void GraphicManager::draw(sf::Sprite& sprite){
-	getInstance()->m_Window.draw(sprite);
+	m_Window.draw(sprite);
 }
 
 void GraphicManager::draw(sf::RectangleShape& rectangleShape){
-	getInstance()->m_Window.draw(rectangleShape);
+	m_Window.draw(rectangleShape);
 }
 
 sf::RenderWindow* GraphicManager::getWindow(){
-	return &m_Instance->m_Window;
+	return &m_Window;
 }
