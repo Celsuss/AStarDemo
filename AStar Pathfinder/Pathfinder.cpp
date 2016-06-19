@@ -144,14 +144,8 @@ bool Pathfinder::isInOpenList(GridManager::GridNodeVector* openList, GridNode* c
 
 float Pathfinder::calculateGCost(int i, int j, GridManager::GridNodeVector* closedList){
 	float gCost = 10;
-	/*if ((i == 0 || i == 2) && (j == 0 || j == 2))
-		gCost = 14;*/
-	/*if ((i == -1 || i == 1) && (j == -1 || j == 1))
-		gCost = 14;*/
-	if (i != 0 && j != 0)
+	if ((i == 0 || i == 2) && (j == 0 || j == 2))
 		gCost = 14;
-	if (closedList->back()->getParentNode() != nullptr)
-		gCost += closedList->back()->getParentNode()->getGCost();
 
 	return gCost;
 }

@@ -1,0 +1,82 @@
+﻿Build started 2016-06-19 21:35:59.
+     1>Project "C:\Users\Tess\Documents\GitHub\AStarDemo\AStar Pathfinder\AStar Pathfinder.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Tess\Documents\GitHub\AStarDemo\\SFML-2.1\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt AI.cpp Game.cpp GameObject.cpp Goal.cpp GraphicManager.cpp GridManager.cpp GridNode.cpp Main.cpp Pathfinder.cpp TextureManager.cpp Wall.cpp
+         Wall.cpp
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\wall.cpp(8): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+         TextureManager.cpp
+         Pathfinder.cpp
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\pathfinder.cpp(41): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\pathfinder.cpp(42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+         Main.cpp
+         GridNode.cpp
+         GridManager.cpp
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(20): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(34): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(55): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(56): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(79): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(80): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(81): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(84): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(85): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(86): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(100): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(119): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(135): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(136): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(144): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(145): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(163): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(165): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(166): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(167): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(168): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(171): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(172): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(173): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(174): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+         GraphicManager.cpp
+         Goal.cpp
+         GameObject.cpp
+         Game.cpp
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(80): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(95): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(96): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(102): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(103): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(109): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(110): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(116): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(117): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(137): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(149): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+         AI.cpp
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\ai.cpp(48): warning C4018: '<': signed/unsigned mismatch
+         Generating Code...
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\game.cpp(61): warning C4715: 'Game::getGoal': not all control paths return a value
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(128): warning C4172: returning address of local variable or temporary
+     1>c:\users\tess\documents\github\astardemo\astar pathfinder\gridmanager.cpp(130): warning C4172: returning address of local variable or temporary
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tess\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Tess\Documents\GitHub\AStarDemo\\SFML-2.1\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Tess\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tess\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.lib" /MACHINE:X86 Debug\AI.obj
+         Debug\Game.obj
+         Debug\GameObject.obj
+         Debug\Goal.obj
+         Debug\GraphicManager.obj
+         Debug\GridManager.obj
+         Debug\GridNode.obj
+         Debug\Main.obj
+         Debug\Pathfinder.obj
+         Debug\TextureManager.obj
+         Debug\Wall.obj
+         AStar Pathfinder.vcxproj -> C:\Users\Tess\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.exe
+     1>Done Building Project "C:\Users\Tess\Documents\GitHub\AStarDemo\AStar Pathfinder\AStar Pathfinder.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:10.95

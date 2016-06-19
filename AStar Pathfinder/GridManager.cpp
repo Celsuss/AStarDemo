@@ -18,8 +18,8 @@ GridManager* GridManager::getInstance(){
 
 void GridManager::initialize(Game* pGame){
 	srand(time(NULL));
-	sf::Vector2f startPos = sf::Vector2f(25, 25);
-	sf::Vector2f endPos = (sf::Vector2f)GraphicManager::getWindow()->getSize() - sf::Vector2f(25, 25);
+	sf::Vector2f startPos = sf::Vector2f(25, 40);
+	sf::Vector2f endPos = (sf::Vector2f)GraphicManager::getWindow()->getSize() - sf::Vector2f(25, 19);
 	sf::Vector2f gridPos(0, 0);
 
 	GridNode* gridNode = new GridNode(startPos, gridPos);
@@ -121,6 +121,14 @@ GridNode* GridManager::getMatrixNode(sf::Vector2f gridPos){
 
 sf::Vector2f* GridManager::getGridSize(){
 	return getInstance()->m_GridSize;
+}
+
+sf::Vector2f& GridManager::getGridNodeSize(){
+	if (getInstance()->m_GridTileMatrix[0][0] == nullptr)
+		return sf::Vector2f(0,0);
+
+	return sf::Vector2f(getInstance()->m_GridTileMatrix[0][0]->getSprite()->getLocalBounds().width,
+						getInstance()->m_GridTileMatrix[0][0]->getSprite()->getLocalBounds().height);
 }
 
 void GridManager::draw(){

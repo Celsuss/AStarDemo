@@ -43,11 +43,13 @@ void AI::drawPath(){
 	if (m_Path.size() < 2)
 		return;
 
+	sf::Vector2f nodeSize = GridManager::getGridNodeSize();
+
 	for (int i = 0; i < m_Path.size()-1; i++){
 		sf::Vertex line[] =
 		{
-			sf::Vertex(sf::Vector2f(m_Path[i]->x, m_Path[i]->y)),
-			sf::Vertex(sf::Vector2f(m_Path[i + 1]->x, m_Path[i+1]->y))
+			sf::Vertex(sf::Vector2f(m_Path[i]->x + (nodeSize.x / 2), m_Path[i]->y + (nodeSize.y / 2))),
+			sf::Vertex(sf::Vector2f(m_Path[i + 1]->x + (nodeSize.x / 2), m_Path[i + 1]->y + (nodeSize.y / 2)))
 		};
 		line[0].color = sf::Color::Blue;
 		line[1].color = sf::Color::Blue;

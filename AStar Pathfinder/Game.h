@@ -19,6 +19,8 @@ private:
 	void handleEvents();
 	void handleInput();
 	void createWalls();
+	void createSurrondingWalls();
+	void createRandomWalls();
 
 	//bool m_
 	GameObjectVector m_GameObjects;

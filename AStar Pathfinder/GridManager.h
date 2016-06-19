@@ -20,6 +20,7 @@ public:
 	static GridNode* getNode(sf::Vector2f pos);
 	static GridNode* getMatrixNode(sf::Vector2f gridPos);
 	static sf::Vector2f* getGridSize();
+	static sf::Vector2f& getGridNodeSize();
 	static void setNodesIsWalkable(Game* pGame);
 private:
 	GridManager();
