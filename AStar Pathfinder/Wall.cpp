@@ -1,4 +1,5 @@
 #include "Wall.h"
+#include "Game.h"
 #include "GraphicManager.h"
 #include "SFML/Graphics/Rect.hpp"
 
@@ -15,7 +16,8 @@ Wall::Wall(sf::Vector2f pos, int width, int height){
 Wall::~Wall(){}
 
 void Wall::draw(){
-	GraphicManager::getInstance()->draw(m_Rectangle);
+	if (!Game::getDebugging())
+		GraphicManager::getInstance()->draw(m_Rectangle);
 }
 
 sf::RectangleShape* Wall::getShape(){

@@ -4,6 +4,7 @@
 #include "GridNode.h"
 #include "Game.h"
 #include "Wall.h"
+#include <iostream>
 #include <time.h>
 
 GridManager* GridManager::m_Instance = new GridManager();
@@ -16,26 +17,26 @@ GridManager* GridManager::getInstance(){
 	return m_Instance;
 }
 
-void GridManager::initialize(Game* pGame){
+void GridManager::initialize(){
 	srand(time(NULL));
 	sf::Vector2f startPos = sf::Vector2f(25, 40);
 	sf::Vector2f endPos = (sf::Vector2f)GraphicManager::getInstance()->getWindow()->getSize() - sf::Vector2f(25, 10);
 	sf::Vector2f gridPos(0, 0);
 
-	GridNode* gridNode = new GridNode(startPos, gridPos);
+	GridNode* gridNode = new GridNode(startPos, gridPos, 0);
 	int gridNodeRadie = gridNode->getSprite()->getLocalBounds().height;
 	int matrixRows = (endPos.y - startPos.y) / gridNodeRadie;
 	int matrixColumms = (endPos.x - startPos.x) / gridNodeRadie;
 	delete gridNode;
 
-	m_GridTileMatrix.resize(matrixRows);
-
 	sf::Vector2f pos = startPos;
-	for (int i = 0; i < m_GridTileMatrix.size(); i++){
+	int index = 0;
+	for (int i = 0; i < matrixRows; i++){
 		gridPos.x = 0;
 		for (int j = 0; j < matrixColumms; j++){
-			m_GridTileMatrix[i].push_back(new GridNode(pos, gridPos));
+			m_GridTiles.push_back(new GridNode(pos, gridPos, index));
 			gridPos.x++;
+			index++;
 			pos.x += gridNodeRadie;
 		}
 		pos.y += gridNodeRadie;
@@ -43,8 +44,7 @@ void GridManager::initialize(Game* pGame){
 		gridPos.y++;
 	}
 
-	m_GridSize = new sf::Vector2f(gridPos);
-	setNodesIsWalkable(pGame);
+	m_GridSize = sf::Vector2f(gridPos);
 }
 
 void GridManager::update(){
@@ -52,43 +52,25 @@ void GridManager::update(){
 }
 
 void GridManager::clearValues(){
-	for (int i = 0; i < m_GridTileMatrix.size(); i++){
-		for (int j = 0; j < m_GridTileMatrix[i].size(); j++){
-			m_GridTileMatrix[i][j]->clearValues();
-		}
+	for (auto it : m_GridTiles) {
+		it->clearValues();
 	}
 }
 
 GridNode* GridManager::getRandomNode(){
-	int matrixHeight = m_GridTileMatrix.size()-1;
-	int matrixWidth = m_GridTileMatrix.back().size()-1;
-	int r1 = rand() % (100 * matrixHeight);
-	int r2 = rand() % (100 * matrixWidth);
-	r1 /= 100;
-	r2 /= 100;
-	
-	return m_GridTileMatrix[r1][r2];
+	return m_GridTiles[rand() % (m_GridTiles.size()-1)];
 }
 
-GridNode* GridManager::getRandomNodeWithinRange(sf::Vector2f pos, int range){
-	GridNode* nearestNode = getNode(pos);
-	int matrixHeight = m_GridTileMatrix.size() - 1;
-	int matrixWidth = m_GridTileMatrix.back().size() - 1;
+GridNode* GridManager::getRandomWalkableNode(){
+	GridNode* node = m_GridTiles[rand() % (m_GridTiles.size() - 1)];
+	while (!node->getIsWalkable()){
+		node = m_GridTiles[rand() % (m_GridTiles.size() - 1)];
+	}
+	return node;
+}
 
-	int rangeTop = nearestNode->getGridPosition()->y - (range / 2);
-	int rangeBottom = nearestNode->getGridPosition()->y + (range / 2);
-	int rangeLeft = nearestNode->getGridPosition()->x - (range / 2);
-	int rangeRight = nearestNode->getGridPosition()->x + (range / 2);
-
-	int gridTop = m_GridTileMatrix[rangeTop > 0 ? rangeTop : 0].back()->getGridPosition()->y;
-	int gridBottom = m_GridTileMatrix[rangeBottom < matrixHeight ? rangeBottom : matrixHeight].back()->getGridPosition()->y;
-	int gridLeft = m_GridTileMatrix.back()[rangeLeft > 0 ? rangeLeft : 0]->getGridPosition()->x;
-	int gridRight = m_GridTileMatrix.back()[rangeRight < matrixWidth ? rangeRight : matrixWidth]->getGridPosition()->x;
-
-	int r1 = rand() % (100 * range) / 100;
-	int r2 = rand() % (100 * range) / 100;
-
-	return m_GridTileMatrix[gridTop + r1][gridLeft + r2];
+GridNode* GridManager::getNode(int index){
+	return m_GridTiles[index];
 }
 
 GridNode* GridManager::getNode(sf::Vector2f pos){
@@ -97,18 +79,16 @@ GridNode* GridManager::getNode(sf::Vector2f pos){
 	float y0 = pos.y;
 	float distance = 100000;
 
-	for (int i = 0; i < m_GridTileMatrix.size(); i++){
-		for (auto j = m_GridTileMatrix[i].begin(); j != m_GridTileMatrix[i].end(); j++){
-			float x1 = (*j)->getPosition()->x;
-			float y1 = (*j)->getPosition()->y;
-			
-			float dx = x1 - x0;
-			float dy = y1 - y0;
-			float length = std::sqrt((dx*dx) + (dy*dy));
-			if (distance > length){
-				distance = length;
-				nearestNode = (*j);
-			}
+	for (auto it : m_GridTiles){
+		float x1 = it->getPosition()->x;
+		float y1 = it->getPosition()->y;
+		
+		float dx = x1 - x0;
+		float dy = y1 - y0;
+		float length = std::sqrt((dx*dx) + (dy*dy));
+		if (distance > length){
+			distance = length;
+			nearestNode = it;
 		}
 	}
 
@@ -116,39 +96,44 @@ GridNode* GridManager::getNode(sf::Vector2f pos){
 }
 
 GridNode* GridManager::getMatrixNode(sf::Vector2f gridPos){
-	return m_GridTileMatrix[gridPos.y][gridPos.x];
+	return m_GridTiles[(gridPos.y * m_GridSize.x) + gridPos.x];
 }
 
-sf::Vector2f* GridManager::getGridSize(){
+GridManager::GridNodeVector* GridManager::getNodeVector(){
+	return &m_GridTiles;
+}
+
+float GridManager::getGridSize(){
+	return m_GridTiles.size();
+}
+
+sf::Vector2f& GridManager::getGridSize2f(){
 	return m_GridSize;
 }
 
 sf::Vector2f& GridManager::getGridNodeSize(){
-	if (m_GridTileMatrix[0][0] == nullptr)
-		return sf::Vector2f(0,0);
-
-	return sf::Vector2f(m_GridTileMatrix[0][0]->getSprite()->getLocalBounds().width,
-						m_GridTileMatrix[0][0]->getSprite()->getLocalBounds().height);
+	if (m_GridTiles.empty())
+		return sf::Vector2f(0, 0);
+	return sf::Vector2f(m_GridTiles[0]->getSprite()->getLocalBounds().width,
+						m_GridTiles[0]->getSprite()->getLocalBounds().height);
 }
 
 void GridManager::draw(){
-	for (int i = 0; i < m_GridTileMatrix.size(); i++){
-		for (int j = 0; j < m_GridTileMatrix[i].size(); j++){
-			m_GridTileMatrix[i][j]->draw();
-		}
-	}
+	for (auto it : m_GridTiles)
+		it->draw();
 }
 
 void GridManager::setNodesIsWalkable(Game* pGame){
+	int unwalkableNodeCount = 0;
 	Game::GameObjectVector* objects = pGame->getGameObjects();
-	for (int i = 0; i < m_GridTileMatrix.size(); i++){
-		for (int j = 0; j < m_GridTileMatrix[i].size(); j++){
-			for (auto it = objects->begin(); it != objects->end(); it++){
-				if ((*it)->getGameObjectType() == GameObject::Type::Wall){
-					//getInstance()->m_GridTileMatrix[i][j]->setIsWalkable(true);
-					if (getWallNodeCollision(m_GridTileMatrix[i][j], (Wall*)*it)){
-						m_GridTileMatrix[i][j]->setIsWalkable(false);
-					}
+
+	for (auto it : m_GridTiles){
+		it->setIsWalkable(true);
+		for (auto it2 : *objects){
+			if (it2->getGameObjectType() == GameObject::Type::Wall){
+				if (getWallNodeCollision(it, (Wall*)it2)){
+					it->setIsWalkable(false);
+					unwalkableNodeCount++;
 				}
 			}
 		}
@@ -165,9 +150,9 @@ bool GridManager::getWallNodeCollision(GridNode* pNode, Wall* pWall){
 
 	int wallMinusSize = 5;
 	int x2Min = pWall->getPosition()->x + wallMinusSize;
-	int x2Max = x2Min + pWall->getShape()->getLocalBounds().width - (wallMinusSize*2);
+	int x2Max = x2Min + pWall->getShape()->getLocalBounds().width - (wallMinusSize * 2);
 	int y2Min = pWall->getPosition()->y + wallMinusSize;
-	int y2Max = y2Min + pWall->getShape()->getLocalBounds().height - (wallMinusSize*2);
+	int y2Max = y2Min + pWall->getShape()->getLocalBounds().height - (wallMinusSize * 2);
 
 	// Collision tests
 	if (x1Max < x2Min || x1Min > x2Max) return false;

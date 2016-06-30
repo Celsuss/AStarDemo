@@ -1,4 +1,5 @@
 #include "GraphicManager.h"
+#include <iostream>
 
 GraphicManager* GraphicManager::m_Instance = new GraphicManager();
 
@@ -13,6 +14,8 @@ GraphicManager* GraphicManager::getInstance(){
 void GraphicManager::initialize(){
 	m_Window.create(sf::VideoMode(900, 600), "A* demo");
 	m_Window.setFramerateLimit(60);		//Set max fps tp 60
+	if (!m_Font.loadFromFile("Assets/arial.ttf"))
+		std::cout << "Failed to load font" << std::endl;
 }
 
 void GraphicManager::update(){
@@ -34,4 +37,8 @@ void GraphicManager::draw(sf::RectangleShape& rectangleShape){
 
 sf::RenderWindow* GraphicManager::getWindow(){
 	return &m_Window;
+}
+
+sf::Font* GraphicManager::getFont(){
+	return &m_Font;
 }

@@ -15,6 +15,7 @@ public:
 	void draw(sf::Sprite& sprite);
 	void draw(sf::RectangleShape& rectangleShape);
 	sf::RenderWindow* getWindow();
+	sf::Font* getFont();
 private:
 	GraphicManager();
 	~GraphicManager();
@@ -24,6 +25,7 @@ private:
 	void drawNormalGround();
 	void drawForeGround();
 
+	sf::Font m_Font;
 	sf::RenderWindow m_Window;
 	DrawableList m_Background;
 	DrawableList m_NormalGround;

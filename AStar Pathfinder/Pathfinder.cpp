@@ -1,4 +1,6 @@
 #include "Pathfinder.h"
+#include "SFML/System/Clock.hpp"
+#include "TextureManager.h"
 #include "GridNode.h"
 #include <iostream>
 
@@ -12,144 +14,152 @@ Pathfinder* Pathfinder::getInstance(){
 	return m_Instance;
 }
 
+// Calculates the path to the goal from the AI using the A* algorithm.
+// Returns a sf::vector2f vector where all elements represent the
+// position of a GridNode.
 Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector2f endPos){
+	sf::Clock clock;
 	GridNode* endNode = GridManager::getInstance()->getNode(endPos);
 	GridManager::GridNodeVector openList;
 	GridManager::GridNodeVector closedList;
 	openList.push_back(GridManager::getInstance()->getNode(startPos));
 	sf::Vector2f gridPos(*openList.back()->getGridPosition());
 
-	bool loop = true;
-	int loopTurn = 0;
+	while ((closedList.empty() || closedList.back() != endNode) && !openList.empty()){
+		GridNode* currentNode = getNodeWithLowestFValue(&openList);
+		closedList.push_back(currentNode);
 
-	while (loop && loopTurn < 1000){
-
-		closedList.push_back(getNodeWithLowestFCost(&openList));
-		auto eraseThis = getIteratorWithlowestFCost(&openList);
-		openList.erase(getIteratorWithlowestFCost(&openList));
-		gridPos = *closedList.back()->getGridPosition();
-
-		if (closedList.back() == endNode && openList.size() > 0){
-			loop = false;
-			break;
-		}
-
-		int gridWidth = GridManager::getInstance()->getGridSize()->x - 1;
-		int gridHeight = GridManager::getInstance()->getGridSize()->y - 1;
-
-		for (int i = -1; i < 2; i++){
-			for (int j = -1; j < 2; j++){
-				sf::Vector2f neightborGridPos(closedList.back()->getGridPosition()->x + i, closedList.back()->getGridPosition()->y + j);
-				if (neightborGridPos.x >= 0 && neightborGridPos.x <= gridWidth && neightborGridPos.y >= 0 && neightborGridPos.y <= gridHeight){
-					GridNode* neighborNode = GridManager::getInstance()->getMatrixNode(neightborGridPos);
-					if (!(i == 0 && j == 0) && neighborNode->isWalkable()){
-						float gCost = calculateGCost(i, j, &closedList);
-						float hCost = calculateHCost(neighborNode, endNode);
-
-						if (isInClosedList(&closedList, neighborNode)){
-						}
-						else if (isInOpenList(&openList, neighborNode)){
-							if (gCost < neighborNode->getGCost()){
-								neighborNode->setGCost(gCost);
-								neighborNode->setParentNode(closedList.back());
-							}
+		int nodeIndex = closedList.back()->getIndex();
+		int index = closedList.back()->getIndex();
+		index -= GridManager::getInstance()->getGridSize2f().x + 1;
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++){
+				if (indexIsInsideGrid(index)){
+					GridNode* node = GridManager::getInstance()->getNode(index);
+					if (node->getIsWalkable() && !vectorContains(&closedList, node)){
+						if (!vectorContains(&openList, node)){
+							node->setParentNode(closedList.back());
+							node->setGCost(calculateGValue(node, i, j));
+							openList.push_back(node);
+							node->setSpriteTexture(TextureManager::getInstance()->getTexture("Grid_B"));
 						}
 						else{
-							openList.push_back(neighborNode);
-							openList.back()->setGCost(gCost);
-							openList.back()->setHCost(hCost);
-							openList.back()->setParentNode(closedList.back());
+							int gCost = calculateGValue(node, i, j);
+							if (gCost < node->getGCost()){
+								node->setParentNode(closedList.back());
+								node->setGCost(gCost);
+							}
 						}
 					}
+					index++;
 				}
-				gridPos.x++;
 			}
-			gridPos.y++;
+			index += GridManager::getInstance()->getGridSize2f().x - 3;
 		}
-		loopTurn++;
 	}
 
-	PositionVector returnList;
+	PositionVector* path = getPath(endNode);
 
-	GridNode* startNode = GridManager::getInstance()->getNode(startPos);
-	GridNode* returnNode = endNode;
-	GridNode* prevNode = nullptr;
-	loopTurn = 0;
-	while (true){
-		if (returnNode->getParentNode() != nullptr){
-			returnList.push_back(returnNode->getPosition());
-			prevNode = returnNode;
-			returnNode = returnNode->getParentNode();
-		}
-		else
-			break;
-		loopTurn++;
-	}
+	int ms = clock.getElapsedTime().asMilliseconds();
+	std::cout << "Pathfinding took " << ms << "ms" << std::endl;
 
 	GridManager::getInstance()->clearValues();
-	return returnList;
+	return *path;
 }
 
-GridNode* Pathfinder::getNodeWithLowestFCost(GridManager::GridNodeVector* openList){
-	GridNode* returnNode = *openList->begin();;
-	float currentFCost = 10000;
+// Calculates the H values of every GridNode
+void Pathfinder::calculateHValues(GridNode* endNode){
+	GridManager::GridNodeVector* nodes = GridManager::getInstance()->getNodeVector();
+	for (auto it : *nodes){
+		it->setHCost(calculateHValue(it, endNode));
+	}
+}
 
-	for (auto i = openList->begin(); *i != openList->back(); i++){
-		if (currentFCost > (*i)->getFCost()){
-			returnNode = *i;
+// Finds the node with the lowest F value in the open list and returns the node
+GridNode* Pathfinder::getNodeWithLowestFValue(GridManager::GridNodeVector* openList){
+	GridNode* returnNode = *openList->begin();
+	float currentFCost = returnNode->getFCost();
+
+	auto save = std::begin(*openList);
+	auto it = std::begin(*openList);
+	for (; it != std::end(*openList); it++){
+		if (currentFCost > (*it)->getFCost()){
+			returnNode = (*it);
 			currentFCost = returnNode->getFCost();
+			save = it;
 		}
 	}
+	it--;
+
+	openList->erase(save);
 	return returnNode;
 }
 
+// Finds the node with the lowest F value in the open list and returns the node iterator
 GridManager::GridNodeVector::iterator Pathfinder::getIteratorWithlowestFCost(GridManager::GridNodeVector* openList){
 	auto returnIterator = openList->begin();
-	float currentFCost = 10000;
+	float currentFCost = (*returnIterator)->getFCost();
 
-	for (auto i = openList->begin(); *i != openList->back(); i++){
-		if (currentFCost > (*i)->getFCost()){
-			returnIterator = i;
-			currentFCost = (*i)->getFCost();
+	for (auto it = openList->begin(); *it != openList->back(); it++){
+		if (currentFCost > (*it)->getFCost()){
+			returnIterator = it;
+			currentFCost = (*it)->getFCost();
 		}
 	}
 	return returnIterator;
 }
 
-bool Pathfinder::isInClosedList(GridManager::GridNodeVector* closedList, GridNode* currentNode){
-	if (closedList->size() == 0)
+// Returns true if the current node is in the closed list
+bool Pathfinder::vectorContains(GridManager::GridNodeVector* vector, GridNode* node){
+	if (vector->empty())
 		return false;
 
-	for (auto i = closedList->begin(); *i != closedList->back(); i++){
-		if ((*i)->getGridPosition() == currentNode->getGridPosition())
+	for (auto it : *vector){
+		/*if (it->getGridPosition() == node->getGridPosition())
+			return true;*/
+		if (it == node)
 			return true;
 	}
 	return false;
 }
 
-bool Pathfinder::isInOpenList(GridManager::GridNodeVector* openList, GridNode* currentNode){
-	if (openList->size() == 0)
-		return false;
-
-	for (auto i = openList->begin(); *i != openList->back(); i++){
-		if ((*i)->getGridPosition() == currentNode->getGridPosition())
-			return true;
-	}
-	return false;
-}
-
-float Pathfinder::calculateGCost(int i, int j, GridManager::GridNodeVector* closedList){
+// Calculates the G value of a node.
+// The G value is the move cost to move to this node.
+float Pathfinder::calculateGValue(GridNode* node, int i, int j){
 	float gCost = 10;
-	if ((i == 0 || i == 2) && (j == 0 || j == 2))
+	if (i != 1 && j != 1)
 		gCost = 14;
 
-	return gCost;
+	return gCost + node->getParentNode()->getGCost();
 }
 
-float Pathfinder::calculateHCost(GridNode* neighborNode, GridNode* endNode){
-	sf::Vector2f neighborGridPos = *neighborNode->getGridPosition();
+// Calculates the H value of a node.
+// The H value is the estimated move cost to move to the
+// goal node.
+float Pathfinder::calculateHValue(GridNode* currentNode, GridNode* endNode){
+	sf::Vector2f neighborGridPos = *currentNode->getGridPosition();
 	sf::Vector2f targetGridPos = *endNode->getGridPosition();
 
-	float hCost = (std::abs(targetGridPos.x - neighborGridPos.x) + std::abs(targetGridPos.y - neighborGridPos.y)) * 10;
+	float hCost = (std::abs(targetGridPos.x - neighborGridPos.x) + std::abs(targetGridPos.y - neighborGridPos.y))*10;
 	return hCost;
+}
+
+// Checks if the index inside the grid.
+// If it is, return true else return false
+bool Pathfinder::indexIsInsideGrid(int index){
+	int size = GridManager::getInstance()->getGridSize2f().x * GridManager::getInstance()->getGridSize2f().y;
+	if (index >= size || index < 0)
+		return false;
+	return true;
+}
+
+// Returns the PositionVector to the endNodes
+Pathfinder::PositionVector* Pathfinder::getPath(GridNode* endNode){
+	PositionVector* path = new PositionVector;
+	GridNode* node = endNode;
+	while (node != nullptr){
+		path->push_back(node->getPosition());
+		node = node->getParentNode();
+	}
+	return path;
 }

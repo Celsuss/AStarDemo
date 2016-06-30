@@ -1,8 +1,9 @@
 #include "GridNode.h"
-#include "GraphicManager.h"
 #include "TextureManager.h"
+#include "GraphicManager.h"
+#include "Game.h"
 
-GridNode::GridNode(sf::Vector2f pos, sf::Vector2f gridPos){
+GridNode::GridNode(sf::Vector2f pos, sf::Vector2f gridPos, int index){
 	m_pSprite = new sf::Sprite(*TextureManager::getInstance()->getTexture("Grid_G"));
 	m_pSprite->setPosition(pos);
 	m_Position = sf::Vector2f(pos);
@@ -13,12 +14,22 @@ GridNode::GridNode(sf::Vector2f pos, sf::Vector2f gridPos){
 	m_GCost = 0;
 	m_HCost = 0;
 	m_FCost = 0;
+	m_Index = index;
+
+	m_IndexText.setFont(*GraphicManager::getInstance()->getFont());
+	m_IndexText.setCharacterSize(12);
+	m_IndexText.setColor(sf::Color::White);
+	m_IndexText.setString(std::to_string(m_Index));
+	m_IndexText.setPosition(m_Position);
 }
 
 GridNode::~GridNode(){}
 
 void GridNode::draw(){
-	GraphicManager::getInstance()->draw(*m_pSprite);
+	if (Game::getDebugging()){
+		GraphicManager::getInstance()->draw(*m_pSprite);
+		GraphicManager::getInstance()->draw(m_IndexText);
+	}
 }
 
 sf::Sprite* GridNode::getSprite(){
@@ -27,6 +38,10 @@ sf::Sprite* GridNode::getSprite(){
 
 sf::Vector2f* GridNode::getPosition(){
 	return &m_Position;
+}
+
+int GridNode::getIndex(){
+	return m_Index;
 }
 
 GridNode* GridNode::getParentNode(){
@@ -50,16 +65,22 @@ float GridNode::getFCost(){
 	return m_FCost;
 }
 
-bool GridNode::isWalkable(){
+bool GridNode::getIsWalkable(){
 	if (!m_IsWalkable)
 		int kalle = 0;
 	return m_IsWalkable;
+}
+
+void GridNode::setSpriteTexture(sf::Texture* texture){
+	m_pSprite->setTexture(*texture);
 }
 
 void GridNode::setIsWalkable(bool walkable){
 	m_IsWalkable = walkable;
 	if (!walkable)
 		m_pSprite->setTexture(*TextureManager::getInstance()->getTexture("Grid_R"));
+	else
+		m_pSprite->setTexture(*TextureManager::getInstance()->getTexture("Grid_G"));
 }
 
 void GridNode::setGCost(float g){
