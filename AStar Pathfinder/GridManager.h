@@ -4,34 +4,32 @@
 
 class Wall;
 class Game;
-class GridNode;
+class Cell;
 
 class GridManager{
 public:
-	typedef std::vector<GridNode*>GridNodeVector;
+	typedef std::vector<Cell*>CellVector;
 
 	static GridManager* getInstance();
 	void initialize();
 	void update();
 	void clearValues();
-	GridNode* getRandomNode();
-	GridNode* getRandomWalkableNode();
-	GridNode* getNode(int index);
-	GridNode* getNode(sf::Vector2f pos);
-	GridNode* getMatrixNode(sf::Vector2f gridPos);
-	GridNodeVector* getNodeVector();
+	Cell* getRandomCell();
+	Cell* getRandomWalkableCell();
+	Cell* getCell(int index);
+	Cell* getCell(sf::Vector2f pos);
+	Cell* getMatrixCell(sf::Vector2f gridPos);
+	CellVector* getCellVector();
 	float getGridSize();
 	sf::Vector2f& getGridSize2f();
-	sf::Vector2f& getGridNodeSize();
-	void setNodesIsWalkable(Game* pGame);
+	sf::Vector2f& getCellSize();
 private:
 	GridManager();
 	~GridManager();
 	static GridManager* m_Instance;
 
 	void draw();
-	bool getWallNodeCollision(GridNode* pNode, Wall* pWall);
 
-	GridNodeVector m_GridTiles;
+	CellVector m_GridTiles;
 	sf::Vector2f m_GridSize;
 };

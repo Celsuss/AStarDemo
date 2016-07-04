@@ -26,10 +26,7 @@ private:
 	void initializeText();
 	void deleteGameObjects();
 	void handleEvents();
-	void createWalls();
 	void createAIAndGoal();
-	void createSurrondingWalls();
-	void createRandomWalls();
 	void updateDeltaTime();
 
 	GameObjectVector m_GameObjects;

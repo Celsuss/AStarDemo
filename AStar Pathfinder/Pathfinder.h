@@ -8,17 +8,17 @@ public:
 
 	static Pathfinder* getInstance();
 	PositionVector getPath(sf::Vector2f startPos, sf::Vector2f endPos);
-	void calculateHValues(GridNode* endNode);
+	void calculateHValues(Cell* pEndCell);
 private:
 	Pathfinder();
 	~Pathfinder();
 	static Pathfinder* m_Instance;
 
-	GridNode* getNodeWithLowestFValue(GridManager::GridNodeVector* openList);
-	GridManager::GridNodeVector::iterator getIteratorWithlowestFCost(GridManager::GridNodeVector* openList);
-	bool vectorContains(GridManager::GridNodeVector* vector, GridNode* node);
-	float calculateGValue(GridNode* node, int i, int j);
-	float calculateHValue(GridNode* currentNode, GridNode* endNode);
+	Cell* getCellWithLowestFValue(GridManager::CellVector* pOpenList);
+	GridManager::CellVector::iterator getIteratorWithlowestFCost(GridManager::CellVector* pOpenList);
+	bool vectorContains(GridManager::CellVector* pVector, Cell* pCell);
+	float calculateGValue(Cell* pCell, int i, int j);
+	float calculateHValue(Cell* pCurrentCell, Cell* pEndCell);
 	bool indexIsInsideGrid(int index);
-	PositionVector* getPath(GridNode* endNode);
+	PositionVector* getPath(Cell* pEndCell);
 };

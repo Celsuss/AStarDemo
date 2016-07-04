@@ -1,36 +1,26 @@
-﻿Build started 6/30/2016 11:35:31 PM.
+﻿Build started 7/4/2016 11:56:00 PM.
      1>Project "C:\Users\Celsuss\Documents\GitHub\AStarDemo\AStar Pathfinder\AStar Pathfinder.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Celsuss\Documents\GitHub\AStarDemo\\SFML-2.1\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp
          Game.cpp
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(117): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(143): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(144): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(150): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(151): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(157): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(158): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(164): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(165): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(191): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(196): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(207): warning C4244: '=' : conversion from 'sf::Int32' to 'float', possible loss of data
-     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(87): warning C4715: 'Game::getGoal' : not all control paths return a value
+     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(111): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(131): warning C4244: '=' : conversion from 'sf::Int32' to 'float', possible loss of data
+     1>c:\users\celsuss\documents\github\astardemo\astar pathfinder\game.cpp(86): warning C4715: 'Game::getGoal' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Celsuss\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Celsuss\Documents\GitHub\AStarDemo\\SFML-2.1\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Celsuss\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Celsuss\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.lib" /MACHINE:X86 Debug\AI.obj
+         Debug\Cell.obj
          Debug\Game.obj
          Debug\GameObject.obj
          Debug\Goal.obj
          Debug\GraphicManager.obj
          Debug\GridManager.obj
-         Debug\GridNode.obj
          Debug\Main.obj
+         Debug\MazeGenerator.obj
          Debug\Pathfinder.obj
          Debug\TextureManager.obj
-         Debug\Wall.obj
          AStar Pathfinder.vcxproj -> C:\Users\Celsuss\Documents\GitHub\AStarDemo\Debug\AStar Pathfinder.exe
      1>Done Building Project "C:\Users\Celsuss\Documents\GitHub\AStarDemo\AStar Pathfinder\AStar Pathfinder.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.04
+Time Elapsed 00:00:01.27

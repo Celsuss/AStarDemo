@@ -1,4 +1,5 @@
 #include "AI.h"
+#include "Game.h"
 #include "TextureManager.h"
 #include "GraphicManager.h"
 
@@ -19,7 +20,8 @@ AI::~AI(){
 void AI::draw(){
 	walk();
 	m_pSprite->setPosition(m_Position);
-	drawPath();
+	if (Game::getDebugging())
+		drawPath();
 	GraphicManager::getInstance()->draw(*m_pSprite);
 }
 
@@ -48,13 +50,13 @@ void AI::drawPath(){
 	if (m_Path.size() < 2)
 		return;
 
-	sf::Vector2f nodeSize = GridManager::getInstance()->getGridNodeSize();
+	sf::Vector2f cellSize = GridManager::getInstance()->getCellSize();
 	
 	for (int i = 0; i < m_Path.size() - 1; i++){
 		sf::Vertex line[] =
 		{
-			sf::Vertex(sf::Vector2f(m_Path[i]->x + (nodeSize.x / 2), m_Path[i]->y + (nodeSize.y / 2))),
-			sf::Vertex(sf::Vector2f(m_Path[i + 1]->x + (nodeSize.x / 2), m_Path[i + 1]->y + (nodeSize.y / 2)))
+			sf::Vertex(sf::Vector2f(m_Path[i]->x + (cellSize.x / 2), m_Path[i]->y + (cellSize.y / 2))),
+			sf::Vertex(sf::Vector2f(m_Path[i + 1]->x + (cellSize.x / 2), m_Path[i + 1]->y + (cellSize.y / 2)))
 		};
 		line[0].color = sf::Color::Yellow;
 		line[1].color = sf::Color::Yellow;

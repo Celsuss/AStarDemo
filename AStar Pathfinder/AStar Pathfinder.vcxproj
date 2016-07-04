@@ -131,28 +131,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="GridManager.cpp" />
-    <ClCompile Include="GridNode.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="GridManager.h" />
-    <ClInclude Include="GridNode.h" />
+    <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

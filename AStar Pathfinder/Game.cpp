@@ -1,11 +1,11 @@
 #include "Game.h"
 #include "AI.h"
-#include "Wall.h"
 #include "Goal.h"
-#include "GridNode.h"
+#include "Cell.h"
 #include "GameObject.h"
 #include "GridManager.h"
 #include "SFML/System.hpp"
+#include "MazeGenerator.h"
 #include "GraphicManager.h"
 #include <iostream>
 
@@ -50,8 +50,7 @@ void Game::initialize(){
 	std::cout << "Initializing game" << std::endl;
 	if (!m_GameObjects.empty())
 		deleteGameObjects();
-	createWalls();
-	GridManager::getInstance()->setNodesIsWalkable(this);
+	MazeGenerator::getInstance()->createMaze();
 	createAIAndGoal();
 	std::cout << "Initializing game done" << std::endl;
 }
@@ -108,98 +107,23 @@ void Game::handleEvents(){
 	}
 }
 
-void Game::createWalls(){
-	createSurrondingWalls();
-	//createRandomWalls();
-}
-
 void Game::createAIAndGoal(){
 	int gridSize = GridManager::getInstance()->getGridSize() - 1;
-	GridNode* goalNode = GridManager::getInstance()->getNode(std::rand() % gridSize);
-	while (!goalNode->getIsWalkable())
-		goalNode = GridManager::getInstance()->getNode(std::rand() % gridSize);
+	Cell* goalCell = GridManager::getInstance()->getCell(std::rand() % gridSize);
+	while (!goalCell->getIsWalkable())
+		goalCell = GridManager::getInstance()->getCell(std::rand() % gridSize);
 
-	sf::Vector2f goalPos = *goalNode->getPosition();
+	sf::Vector2f goalPos = *goalCell->getPosition();
 	m_GameObjects.push_back(new Goal(goalPos));
-	Pathfinder::getInstance()->calculateHValues(goalNode);
+	Pathfinder::getInstance()->calculateHValues(goalCell);
 
-	GridNode* aiNode = GridManager::getInstance()->getNode(std::rand() % gridSize);
-	sf::Vector2f aiPos = *aiNode->getPosition();
-	while (aiPos == goalPos || !aiNode->getIsWalkable()){
-		aiNode = GridManager::getInstance()->getNode(std::rand() % gridSize);
-		aiPos = *aiNode->getPosition();
+	Cell* aiCell = GridManager::getInstance()->getCell(std::rand() % gridSize);
+	sf::Vector2f aiPos = *aiCell->getPosition();
+	while (aiPos == goalPos || !aiCell->getIsWalkable()){
+		aiCell = GridManager::getInstance()->getCell(std::rand() % gridSize);
+		aiPos = *aiCell->getPosition();
 	}
 	m_GameObjects.push_back(new AI(aiPos, goalPos));
-}
-
-void Game::createSurrondingWalls(){
-	sf::Vector2f nodeSize = GridManager::getInstance()->getGridNodeSize();
-	sf::Vector2f gridSize = GridManager::getInstance()->getGridSize2f();
-	sf::Vector2f node = sf::Vector2f(0, 0);
-	sf::Vector2f startPos = *GridManager::getInstance()->getMatrixNode(node)->getPosition();
-
-	sf::Vector2f pos = startPos;
-	node = sf::Vector2f(gridSize.x - 1, 0);
-	int width = GridManager::getInstance()->getMatrixNode(node)->getPosition()->x;
-	int height = nodeSize.y;
-	m_GameObjects.push_back(new Wall(pos, width, height));
-
-	node = sf::Vector2f(gridSize.x - 1, 1);
-	pos = *GridManager::getInstance()->getMatrixNode(node)->getPosition();
-	node = sf::Vector2f(gridSize.x - 1, gridSize.y - 1);
-	width = nodeSize.x;
-	height = GridManager::getInstance()->getMatrixNode(node)->getPosition()->y - nodeSize.y - startPos.y;
-	m_GameObjects.push_back(new Wall(pos, width, height));
-
-	node = sf::Vector2f(0, gridSize.y - 1);
-	pos = *GridManager::getInstance()->getMatrixNode(node)->getPosition();
-	node = sf::Vector2f(gridSize.x - 1, gridSize.y - 1);
-	width = GridManager::getInstance()->getMatrixNode(node)->getPosition()->x;
-	height = nodeSize.y;
-	m_GameObjects.push_back(new Wall(pos, width, height));
-
-	node = sf::Vector2f(0, 1);
-	pos = *GridManager::getInstance()->getMatrixNode(node)->getPosition();
-	node = sf::Vector2f(0, gridSize.y - 1);
-	width = nodeSize.x;
-	height = GridManager::getInstance()->getMatrixNode(node)->getPosition()->y - nodeSize.y - startPos.y;
-	m_GameObjects.push_back(new Wall(pos, width, height));
-}
-
-void Game::createRandomWalls(){
-	sf::Vector2f nodeSize = GridManager::getInstance()->getGridNodeSize();
-	sf::Vector2f gridSize = GridManager::getInstance()->getGridSize2f();
-	sf::Vector2f pxGridSize = sf::Vector2f(gridSize.x * 25, gridSize.y * 25);
-
-	const int maxWallSize = 800;
-	int currentWallSize = 0;
-	int wallCount = 0;
-
-	while (currentWallSize < maxWallSize){
-		GridNode* node = GridManager::getInstance()->getRandomNode();
-		sf::Vector2f pos = *node->getPosition();
-		int width = 25;
-		int height = rand() % (int)pxGridSize.y;
-		height -= height % (int)nodeSize.y;
-
-		//50% chance to switch width and height
-		if (rand() % 100 < 50){
-			int oldwidth = width;
-			width = height;
-			height = oldwidth;
-			if (pos.x + width >= pxGridSize.x)
-				width = pxGridSize.x - pos.x;
-			currentWallSize += width;
-		}
-		else{
-			if (pos.y + height >= pxGridSize.y)
-				height = pxGridSize.y - pos.y;
-			currentWallSize += height;
-		}
-
-		wallCount++;
-		m_GameObjects.push_back(new Wall(pos, width, height));
-	}
 }
 
 void Game::updateDeltaTime(){

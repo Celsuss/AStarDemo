@@ -1,7 +1,7 @@
 #include "Pathfinder.h"
 #include "SFML/System/Clock.hpp"
 #include "TextureManager.h"
-#include "GridNode.h"
+#include "Cell.h"
 #include <iostream>
 
 Pathfinder* Pathfinder::m_Instance = new Pathfinder();
@@ -16,38 +16,38 @@ Pathfinder* Pathfinder::getInstance(){
 
 // Calculates the path to the goal from the AI using the A* algorithm.
 // Returns a sf::vector2f vector where all elements represent the
-// position of a GridNode.
+// position of a Cell.
 Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector2f endPos){
 	sf::Clock clock;
-	GridNode* endNode = GridManager::getInstance()->getNode(endPos);
-	GridManager::GridNodeVector openList;
-	GridManager::GridNodeVector closedList;
-	openList.push_back(GridManager::getInstance()->getNode(startPos));
+	Cell* endCell = GridManager::getInstance()->getCell(endPos);
+	GridManager::CellVector openList;
+	GridManager::CellVector closedList;
+	openList.push_back(GridManager::getInstance()->getCell(startPos));
 	sf::Vector2f gridPos(*openList.back()->getGridPosition());
 
-	while ((closedList.empty() || closedList.back() != endNode) && !openList.empty()){
-		GridNode* currentNode = getNodeWithLowestFValue(&openList);
-		closedList.push_back(currentNode);
+	while ((closedList.empty() || closedList.back() != endCell) && !openList.empty()){
+		Cell* currentCell = getCellWithLowestFValue(&openList);
+		closedList.push_back(currentCell);
 
-		int nodeIndex = closedList.back()->getIndex();
+		int cellIndex = closedList.back()->getIndex();
 		int index = closedList.back()->getIndex();
 		index -= GridManager::getInstance()->getGridSize2f().x + 1;
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 3; j++){
 				if (indexIsInsideGrid(index)){
-					GridNode* node = GridManager::getInstance()->getNode(index);
-					if (node->getIsWalkable() && !vectorContains(&closedList, node)){
-						if (!vectorContains(&openList, node)){
-							node->setParentNode(closedList.back());
-							node->setGCost(calculateGValue(node, i, j));
-							openList.push_back(node);
-							node->setSpriteTexture(TextureManager::getInstance()->getTexture("Grid_B"));
+					Cell* cell = GridManager::getInstance()->getCell(index);
+					if (cell->getIsWalkable() && !vectorContains(&closedList, cell)){
+						if (!vectorContains(&openList, cell)){
+							cell->setParentCell(closedList.back());
+							cell->setGCost(calculateGValue(cell, i, j));
+							openList.push_back(cell);
+							cell->setSpriteTexture(TextureManager::getInstance()->getTexture("Grid_B"));
 						}
 						else{
-							int gCost = calculateGValue(node, i, j);
-							if (gCost < node->getGCost()){
-								node->setParentNode(closedList.back());
-								node->setGCost(gCost);
+							int gCost = calculateGValue(cell, i, j);
+							if (gCost < cell->getGCost()){
+								cell->setParentCell(closedList.back());
+								cell->setGCost(gCost);
 							}
 						}
 					}
@@ -58,7 +58,7 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 		}
 	}
 
-	PositionVector* path = getPath(endNode);
+	PositionVector* path = getPath(endCell);
 
 	int ms = clock.getElapsedTime().asMilliseconds();
 	std::cout << "Pathfinding took " << ms << "ms" << std::endl;
@@ -67,40 +67,40 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 	return *path;
 }
 
-// Calculates the H values of every GridNode
-void Pathfinder::calculateHValues(GridNode* endNode){
-	GridManager::GridNodeVector* nodes = GridManager::getInstance()->getNodeVector();
-	for (auto it : *nodes){
-		it->setHCost(calculateHValue(it, endNode));
+// Calculates the H values of every Cell
+void Pathfinder::calculateHValues(Cell* pEndCell){
+	GridManager::CellVector* cells = GridManager::getInstance()->getCellVector();
+	for (auto it : *cells){
+		it->setHCost(calculateHValue(it, pEndCell));
 	}
 }
 
-// Finds the node with the lowest F value in the open list and returns the node
-GridNode* Pathfinder::getNodeWithLowestFValue(GridManager::GridNodeVector* openList){
-	GridNode* returnNode = *openList->begin();
-	float currentFCost = returnNode->getFCost();
+// Finds the cell with the lowest F value in the open list and returns the cell
+Cell* Pathfinder::getCellWithLowestFValue(GridManager::CellVector* pOpenList){
+	Cell* returnCell = *pOpenList->begin();
+	float currentFCost = returnCell->getFCost();
 
-	auto save = std::begin(*openList);
-	auto it = std::begin(*openList);
-	for (; it != std::end(*openList); it++){
+	auto save = std::begin(*pOpenList);
+	auto it = std::begin(*pOpenList);
+	for (; it != std::end(*pOpenList); it++){
 		if (currentFCost > (*it)->getFCost()){
-			returnNode = (*it);
-			currentFCost = returnNode->getFCost();
+			returnCell = (*it);
+			currentFCost = returnCell->getFCost();
 			save = it;
 		}
 	}
 	it--;
 
-	openList->erase(save);
-	return returnNode;
+	pOpenList->erase(save);
+	return returnCell;
 }
 
-// Finds the node with the lowest F value in the open list and returns the node iterator
-GridManager::GridNodeVector::iterator Pathfinder::getIteratorWithlowestFCost(GridManager::GridNodeVector* openList){
-	auto returnIterator = openList->begin();
+// Finds the cell with the lowest F value in the open list and returns the cell iterator
+GridManager::CellVector::iterator Pathfinder::getIteratorWithlowestFCost(GridManager::CellVector* pOpenList){
+	auto returnIterator = pOpenList->begin();
 	float currentFCost = (*returnIterator)->getFCost();
 
-	for (auto it = openList->begin(); *it != openList->back(); it++){
+	for (auto it = pOpenList->begin(); *it != pOpenList->back(); it++){
 		if (currentFCost > (*it)->getFCost()){
 			returnIterator = it;
 			currentFCost = (*it)->getFCost();
@@ -109,36 +109,34 @@ GridManager::GridNodeVector::iterator Pathfinder::getIteratorWithlowestFCost(Gri
 	return returnIterator;
 }
 
-// Returns true if the current node is in the closed list
-bool Pathfinder::vectorContains(GridManager::GridNodeVector* vector, GridNode* node){
-	if (vector->empty())
+// Returns true if the current cell is in the closed list
+bool Pathfinder::vectorContains(GridManager::CellVector* pVector, Cell* pCell){
+	if (pVector->empty())
 		return false;
 
-	for (auto it : *vector){
-		/*if (it->getGridPosition() == node->getGridPosition())
-			return true;*/
-		if (it == node)
+	for (auto it : *pVector){
+		if (it == pCell)
 			return true;
 	}
 	return false;
 }
 
-// Calculates the G value of a node.
-// The G value is the move cost to move to this node.
-float Pathfinder::calculateGValue(GridNode* node, int i, int j){
+// Calculates the G value of a cell.
+// The G value is the move cost to move to this cell.
+float Pathfinder::calculateGValue(Cell* pCell, int i, int j){
 	float gCost = 10;
 	if (i != 1 && j != 1)
 		gCost = 14;
 
-	return gCost + node->getParentNode()->getGCost();
+	return gCost + pCell->getParentCell()->getGCost();
 }
 
-// Calculates the H value of a node.
+// Calculates the H value of a cell.
 // The H value is the estimated move cost to move to the
-// goal node.
-float Pathfinder::calculateHValue(GridNode* currentNode, GridNode* endNode){
-	sf::Vector2f neighborGridPos = *currentNode->getGridPosition();
-	sf::Vector2f targetGridPos = *endNode->getGridPosition();
+// goal cell.
+float Pathfinder::calculateHValue(Cell* pCurrentCell, Cell* pEndCell){
+	sf::Vector2f neighborGridPos = *pCurrentCell->getGridPosition();
+	sf::Vector2f targetGridPos = *pEndCell->getGridPosition();
 
 	float hCost = (std::abs(targetGridPos.x - neighborGridPos.x) + std::abs(targetGridPos.y - neighborGridPos.y))*10;
 	return hCost;
@@ -153,13 +151,13 @@ bool Pathfinder::indexIsInsideGrid(int index){
 	return true;
 }
 
-// Returns the PositionVector to the endNodes
-Pathfinder::PositionVector* Pathfinder::getPath(GridNode* endNode){
+// Returns the PositionVector to the endCells
+Pathfinder::PositionVector* Pathfinder::getPath(Cell* pEndCell){
 	PositionVector* path = new PositionVector;
-	GridNode* node = endNode;
-	while (node != nullptr){
-		path->push_back(node->getPosition());
-		node = node->getParentNode();
+	Cell* cell = pEndCell;
+	while (cell != nullptr){
+		path->push_back(cell->getPosition());
+		cell = cell->getParentCell();
 	}
 	return path;
 }
