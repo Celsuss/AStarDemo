@@ -78,12 +78,16 @@ Cell* GridManager::getCell(int index){
 	return m_GridCells[index];
 }
 
+// Returns the cell at the x,y position in the grid
+Cell* GridManager::getCell(sf::Vector2f gridPos){
+	return m_GridCells[gridPos.x + (gridPos.y * m_GridSize.x)];
+}
 
-// Returns the cell at the x,y position in the world
-Cell* GridManager::getCell(sf::Vector2f pos){
+// Returns the cell closest to the x,y position in the world
+Cell* GridManager::getClosestCell(sf::Vector2f worldPos){
 	Cell* nearestCell = nullptr;
-	float x0 = pos.x;
-	float y0 = pos.y;
+	float x0 = worldPos.x;
+	float y0 = worldPos.y;
 	float distance = 100000;
 
 	for (auto it : m_GridCells){
@@ -100,11 +104,6 @@ Cell* GridManager::getCell(sf::Vector2f pos){
 	}
 
 	return nearestCell;
-}
-
-// Returns the cell at the x,y position in the grid
-Cell* GridManager::getMatrixCell(sf::Vector2f gridPos){
-	return m_GridCells[gridPos.x + (gridPos.y * m_GridSize.x)];
 }
 
 // Returns the vector containg the cells

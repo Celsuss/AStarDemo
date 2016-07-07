@@ -21,10 +21,10 @@ Pathfinder* Pathfinder::getInstance(){
 // position of a Cell.
 Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector2f endPos){
 	sf::Clock clock;
-	Cell* endCell = GridManager::getInstance()->getCell(endPos);
+	Cell* endCell = GridManager::getInstance()->getClosestCell(endPos);
 	GridManager::CellVector openList;
 	GridManager::CellVector closedList;
-	openList.push_back(GridManager::getInstance()->getCell(startPos));
+	openList.push_back(GridManager::getInstance()->getClosestCell(startPos));
 	sf::Vector2f gridPos(*openList.back()->getGridPosition());
 
 	while ((closedList.empty() || closedList.back() != endCell) && !openList.empty()){

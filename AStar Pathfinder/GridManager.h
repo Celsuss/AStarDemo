@@ -17,8 +17,8 @@ public:
 	Cell* getRandomCell();
 	Cell* getRandomWalkableCell();
 	Cell* getCell(int index);
-	Cell* getCell(sf::Vector2f pos);
-	Cell* getMatrixCell(sf::Vector2f gridPos);
+	Cell* getCell(sf::Vector2f gridPos);
+	Cell* getClosestCell(sf::Vector2f worldPos);
 	CellVector* getCellVector();
 	float getGridSize();
 	sf::Vector2f& getGridSize2f();
