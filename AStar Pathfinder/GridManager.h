@@ -30,6 +30,6 @@ private:
 
 	void draw();
 
-	CellVector m_GridTiles;
+	CellVector m_GridCells;
 	sf::Vector2f m_GridSize;
 };

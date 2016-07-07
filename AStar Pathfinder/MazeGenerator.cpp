@@ -15,6 +15,7 @@ MazeGenerator* MazeGenerator::getInstance(){
 	return m_Instance;
 }
 
+// Start creating the maze
 void MazeGenerator::createMaze(){
 	sf::Clock clock;
 	GridManager::CellVector& cells = *GridManager::getInstance()->getCellVector();
@@ -33,6 +34,7 @@ void MazeGenerator::createMaze(){
 	std::cout << "Pathfinding took " << ms << "ms" << std::endl;
 }
 
+// Builds the maze
 void MazeGenerator::buildMaze(sf::Vector2i pos, GridManager::CellVector& cells){
 	Direction dir = (Direction)(std::rand() % 4);
 	DirectionVector cantGo;
@@ -99,6 +101,7 @@ void MazeGenerator::buildMaze(sf::Vector2i pos, GridManager::CellVector& cells){
 	}
 }
 
+// Returns true if directions contain dir
 bool MazeGenerator::vectorContains(const Direction& dir, const DirectionVector& directions){
 	for (auto it : directions)
 		if (it == dir)

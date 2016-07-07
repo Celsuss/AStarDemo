@@ -16,6 +16,7 @@ GridManager* GridManager::getInstance(){
 	return m_Instance;
 }
 
+// Initialize the grid
 void GridManager::initialize(){
 	srand(time(NULL));
 	sf::Vector2f startPos = sf::Vector2f(25, 40);
@@ -33,7 +34,7 @@ void GridManager::initialize(){
 	for (int i = 0; i < matrixRows; i++){
 		gridPos.x = 0;
 		for (int j = 0; j < matrixColumms; j++){
-			m_GridTiles.push_back(new Cell(pos, gridPos, index));
+			m_GridCells.push_back(new Cell(pos, gridPos, index));
 			gridPos.x++;
 			index++;
 			pos.x += CellRadie;
@@ -46,39 +47,46 @@ void GridManager::initialize(){
 	m_GridSize = sf::Vector2f(gridPos);
 }
 
+// Update and call the draw function
 void GridManager::update(){
 	draw();
 }
 
+// Clear the values of all the cells
 void GridManager::clearValues(){
-	for (auto it : m_GridTiles) {
+	for (auto it : m_GridCells) {
 		it->clearValues();
 	}
 }
 
+// Returns a random cell
 Cell* GridManager::getRandomCell(){
-	return m_GridTiles[rand() % (m_GridTiles.size()-1)];
+	return m_GridCells[rand() % (m_GridCells.size() - 1)];
 }
 
+// Returns a random walkable cell
 Cell* GridManager::getRandomWalkableCell(){
-	Cell* cell = m_GridTiles[rand() % (m_GridTiles.size() - 1)];
+	Cell* cell = m_GridCells[rand() % (m_GridCells.size() - 1)];
 	while (!cell->getIsWalkable()){
-		cell = m_GridTiles[rand() % (m_GridTiles.size() - 1)];
+		cell = m_GridCells[rand() % (m_GridCells.size() - 1)];
 	}
 	return cell;
 }
 
+// Returns the cell at the index
 Cell* GridManager::getCell(int index){
-	return m_GridTiles[index];
+	return m_GridCells[index];
 }
 
+
+// Returns the cell at the x,y position in the world
 Cell* GridManager::getCell(sf::Vector2f pos){
 	Cell* nearestCell = nullptr;
 	float x0 = pos.x;
 	float y0 = pos.y;
 	float distance = 100000;
 
-	for (auto it : m_GridTiles){
+	for (auto it : m_GridCells){
 		float x1 = it->getPosition()->x;
 		float y1 = it->getPosition()->y;
 		
@@ -94,30 +102,36 @@ Cell* GridManager::getCell(sf::Vector2f pos){
 	return nearestCell;
 }
 
+// Returns the cell at the x,y position in the grid
 Cell* GridManager::getMatrixCell(sf::Vector2f gridPos){
-	return m_GridTiles[gridPos.x + (gridPos.y * m_GridSize.x)];
+	return m_GridCells[gridPos.x + (gridPos.y * m_GridSize.x)];
 }
 
+// Returns the vector containg the cells
 GridManager::CellVector* GridManager::getCellVector(){
-	return &m_GridTiles;
+	return &m_GridCells;
 }
 
+// Returns the number of cells
 float GridManager::getGridSize(){
-	return m_GridTiles.size();
+	return m_GridCells.size();
 }
 
+// Returns the width and height of the grid
 sf::Vector2f& GridManager::getGridSize2f(){
 	return m_GridSize;
 }
 
+// Returns the width and height of a cell
 sf::Vector2f& GridManager::getCellSize(){
-	if (m_GridTiles.empty())
+	if (m_GridCells.empty())
 		return sf::Vector2f(0, 0);
-	return sf::Vector2f(m_GridTiles[0]->getSprite()->getLocalBounds().width,
-						m_GridTiles[0]->getSprite()->getLocalBounds().height);
+	return sf::Vector2f(m_GridCells[0]->getSprite()->getLocalBounds().width,
+						m_GridCells[0]->getSprite()->getLocalBounds().height);
 }
 
+// Draw all the cells
 void GridManager::draw(){
-	for (auto it : m_GridTiles)
+	for (auto it : m_GridCells)
 		it->draw();
 }

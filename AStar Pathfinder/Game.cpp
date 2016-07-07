@@ -17,10 +17,12 @@ Game::Game(){
 
 Game::~Game(){}
 
+// Start the game
 void Game::run(){
 	update();
 }
 
+// Updates the program and all game objects
 void Game::update(){
 	GraphicManager::getInstance()->initialize();
 	GridManager::getInstance()->initialize();
@@ -46,6 +48,7 @@ void Game::update(){
 	}
 }
 
+// Initialize the program
 void Game::initialize(){
 	std::cout << "Initializing game" << std::endl;
 	if (!m_GameObjects.empty())
@@ -55,6 +58,7 @@ void Game::initialize(){
 	std::cout << "Initializing game done" << std::endl;
 }
 
+// Initialize the text and delta timer text
 void Game::initializeText(){
 	m_Text.setFont(*GraphicManager::getInstance()->getFont());
 	m_Text.setCharacterSize(24);
@@ -67,16 +71,19 @@ void Game::initializeText(){
 	m_DTimerText.setString("0");
 }
 
+// Delete all the GameObjects
 void Game::deleteGameObjects(){
 	for (auto it : m_GameObjects)
 		delete it;
 	m_GameObjects.clear();
 }
 
+// Returns a pointer to the GameObject vector
 Game::GameObjectVector* Game::getGameObjects(){
 	return &m_GameObjects;
 }
 
+// Returns the Goal object
 Goal* Game::getGoal(){
 	for (auto it : m_GameObjects){;
 		if (it->getGameObjectType() == GameObject::Type::Goal){
@@ -85,10 +92,12 @@ Goal* Game::getGoal(){
 	}
 }
 
+// Returns true if debugging is true else return false
 bool Game::getDebugging(){
 	return m_Debug;
 }
 
+// Handel events
 void Game::handleEvents(){
 	sf::Event event;
 	while (GraphicManager::getInstance()->getWindow()->pollEvent(event)){
@@ -107,6 +116,7 @@ void Game::handleEvents(){
 	}
 }
 
+// Create the AI and the Goal
 void Game::createAIAndGoal(){
 	int gridSize = GridManager::getInstance()->getGridSize() - 1;
 	Cell* goalCell = GridManager::getInstance()->getCell(std::rand() % gridSize);
@@ -126,6 +136,7 @@ void Game::createAIAndGoal(){
 	m_GameObjects.push_back(new AI(aiPos, goalPos));
 }
 
+// Updates the delta time
 void Game::updateDeltaTime(){
 	sf::Time nowTime = m_Clock.getElapsedTime();
 	m_DeltaTime = nowTime.asMilliseconds() - m_LastTime.asMilliseconds();

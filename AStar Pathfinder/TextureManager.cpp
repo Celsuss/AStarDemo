@@ -10,6 +10,7 @@ TextureManager* TextureManager::getInstance(){
 	return m_Instance;
 }
 
+// Returns a textue, if the texture dont exist then try to load the texture
 sf::Texture* TextureManager::getTexture(std::string name){
 	sf::Texture* tex = m_Textures[name];
 	if (tex == nullptr){
@@ -21,6 +22,7 @@ sf::Texture* TextureManager::getTexture(std::string name){
 	return tex;
 }
 
+// Load a texture with name
 bool TextureManager::loadTexture(std::string name){
 	sf::Texture* tex = new sf::Texture;
 	tex->loadFromFile("Assets/" + name + ".png");

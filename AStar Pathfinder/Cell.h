@@ -19,11 +19,11 @@ public:
 	float getHCost();
 	float getFCost();
 	bool getIsWalkable();
-	void setSpriteTexture(sf::Texture* texture);
+	void setSpriteTexture(sf::Texture* pTexture);
 	void setIsWalkable(bool walkable);
 	void setGCost(float g);
 	void setHCost(float h);
-	void setParentCell(Cell* parent);
+	void setParentCell(Cell* pParent);
 	void clearValues();
 private:
 	void createWallShape();

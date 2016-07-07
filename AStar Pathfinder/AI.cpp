@@ -13,10 +13,11 @@ AI::AI(sf::Vector2f pos, sf::Vector2f targetPos){
 	m_Path.pop_back();
 }
 
-AI::~AI(){
-	m_Path.clear();
-}
+AI::~AI(){}
 
+// Calls the walk function and updates the sprites position
+// Calls drawPath() if debugging is true
+// Draws the AI sprite
 void AI::draw(){
 	walk();
 	m_pSprite->setPosition(m_Position);
@@ -25,6 +26,8 @@ void AI::draw(){
 	GraphicManager::getInstance()->draw(*m_pSprite);
 }
 
+// Walks toward the next position in the path vector.
+// Pop back the path vector when it has reached the position
 void AI::walk(){
 	if (m_Path.size() <= 0)
 		return;
@@ -38,6 +41,7 @@ void AI::walk(){
 	m_Position += deltaP;
 }
 
+// Normalize a Vector2f
 void AI::normalizeVector2f(sf::Vector2f& vec){
 	float length = std::sqrt((vec.x * vec.x) + (vec.y * vec.y));
 	if (length != 0){
@@ -46,6 +50,7 @@ void AI::normalizeVector2f(sf::Vector2f& vec){
 	}
 }
 
+// Draw a line that shows the path to walk
 void AI::drawPath(){
 	if (m_Path.size() < 2)
 		return;

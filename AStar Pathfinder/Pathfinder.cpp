@@ -11,6 +11,8 @@ Pathfinder::Pathfinder(){}
 Pathfinder::~Pathfinder(){}
 
 Pathfinder* Pathfinder::getInstance(){
+	if (!m_Instance)
+		m_Instance = new Pathfinder();
 	return m_Instance;
 }
 
