@@ -5,7 +5,7 @@
 
 class AI : public GameObject{
 public:
-	AI(sf::Vector2f pos, sf::Vector2f targetPos);
+	AI(const sf::Vector2f pos, const sf::Vector2f targetPos);
 	virtual ~AI();
 	virtual void draw();
 private:

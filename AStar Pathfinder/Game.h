@@ -17,9 +17,8 @@ public:
 	void run();
 
 	GameObjectVector* getGameObjects();
-	Goal* getGoal();
+	Goal* getGoal() const;
 	static bool getDebugging();
-	static sf::Font* getFont();
 private:
 	void update();
 	void initialize();

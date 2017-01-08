@@ -10,6 +10,6 @@ sf::Vector2f* GameObject::getPosition(){
 }
 
 // Returns the type
-GameObject::Type GameObject::getGameObjectType(){
+GameObject::Type GameObject::getGameObjectType() const {
 	return m_Type;
 }

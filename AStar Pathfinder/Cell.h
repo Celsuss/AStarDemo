@@ -6,23 +6,23 @@
 
 class Cell{
 public:
-	Cell(sf::Vector2f pos, sf::Vector2f gridPos, int index);
+	Cell(const sf::Vector2f pos, const sf::Vector2f gridPos, const int index);
 	~Cell();
 	void draw();
-	sf::Sprite* getSprite();
+	sf::Sprite* getSprite() const;
 	sf::Vector2f* getPosition();
-	int getIndex();
+	int getIndex() const;
 
-	Cell* getParentCell();
+	Cell* getParentCell() const;
 	sf::Vector2f* getGridPosition();
-	float getGCost();
-	float getHCost();
+	float getGCost() const;
+	float getHCost() const;
 	float getFCost();
-	bool getIsWalkable();
-	void setSpriteTexture(sf::Texture* pTexture);
-	void setIsWalkable(bool walkable);
-	void setGCost(float g);
-	void setHCost(float h);
+	bool getIsWalkable() const;
+	void setSpriteTexture(const sf::Texture* pTexture);
+	void setIsWalkable(const bool walkable);
+	void setGCost(const float g);
+	void setHCost(const float h);
 	void setParentCell(Cell* pParent);
 	void clearValues();
 private:

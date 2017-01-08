@@ -3,7 +3,7 @@
 #include "GraphicManager.h"
 #include "Game.h"
 
-Cell::Cell(sf::Vector2f pos, sf::Vector2f gridPos, int index){
+Cell::Cell(const sf::Vector2f pos, const sf::Vector2f gridPos, const int index){
 	m_pWallShape = nullptr;
 	m_pSprite = new sf::Sprite(*TextureManager::getInstance()->getTexture("Grid_G"));
 	m_pSprite->setPosition(pos);
@@ -19,7 +19,7 @@ Cell::Cell(sf::Vector2f pos, sf::Vector2f gridPos, int index){
 
 	m_IndexText.setFont(*GraphicManager::getInstance()->getFont());
 	m_IndexText.setCharacterSize(12);
-	m_IndexText.setColor(sf::Color::White);
+	m_IndexText.setFillColor(sf::Color::White);
 	m_IndexText.setString(std::to_string(m_Index));
 	m_IndexText.setPosition(m_Position);
 }
@@ -38,7 +38,7 @@ void Cell::draw(){
 }
 
 // Returns the sprite
-sf::Sprite* Cell::getSprite(){
+sf::Sprite* Cell::getSprite() const {
 	return m_pSprite;
 }
 
@@ -48,12 +48,12 @@ sf::Vector2f* Cell::getPosition(){
 }
 
 // Returns the index in the grid
-int Cell::getIndex(){
+int Cell::getIndex() const {
 	return m_Index;
 }
 
 // Returns the cells parent cell
-Cell* Cell::getParentCell(){
+Cell* Cell::getParentCell() const {
 	return m_ParentCell;
 }
 
@@ -63,12 +63,12 @@ sf::Vector2f* Cell::getGridPosition(){
 }
 
 // Returns the G cost
-float Cell::getGCost(){
+float Cell::getGCost() const {
 	return m_GCost;
 }
 
 // Returns the H cost
-float Cell::getHCost(){
+float Cell::getHCost() const {
 	return m_HCost;
 }
 
@@ -79,19 +79,17 @@ float Cell::getFCost(){
 }
 
 // Returns is walkable
-bool Cell::getIsWalkable(){
-	if (!m_IsWalkable)
-		int kalle = 0;
+bool Cell::getIsWalkable() const {
 	return m_IsWalkable;
 }
 
 // Set the texture of the sprite
-void Cell::setSpriteTexture(sf::Texture* pTexture){
+void Cell::setSpriteTexture(const sf::Texture* pTexture){
 	m_pSprite->setTexture(*pTexture);
 }
 
 // Set is walkable and change sprite
-void Cell::setIsWalkable(bool walkable){
+void Cell::setIsWalkable(const bool walkable){
 	m_IsWalkable = walkable;
 	if (walkable){
 		m_pSprite->setTexture(*TextureManager::getInstance()->getTexture("Grid_G"));
@@ -105,13 +103,13 @@ void Cell::setIsWalkable(bool walkable){
 }
 
 // Set G cost
-void Cell::setGCost(float g){
+void Cell::setGCost(const float g){
 	m_GCost = g;
 	m_FCost = m_GCost + m_HCost;
 }
 
 // Set H cost
-void Cell::setHCost(float h){
+void Cell::setHCost(const float h){
 	m_HCost = h;
 	m_FCost = m_GCost + m_HCost;
 }

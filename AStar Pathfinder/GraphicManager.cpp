@@ -26,17 +26,17 @@ void GraphicManager::update(){
 }
 
 // Draw text
-void GraphicManager::draw(sf::Text& text){
+void GraphicManager::draw(const sf::Text& text){
 	m_Window.draw(text);
 }
 
 // Draw sprite
-void GraphicManager::draw(sf::Sprite& sprite){
+void GraphicManager::draw(const sf::Sprite& sprite){
 	m_Window.draw(sprite);
 }
 
 // Draw rectangle shape
-void GraphicManager::draw(sf::RectangleShape& rectangleShape){
+void GraphicManager::draw(const sf::RectangleShape& rectangleShape){
 	m_Window.draw(rectangleShape);
 }
 

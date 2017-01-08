@@ -15,7 +15,7 @@ public:
 
 	virtual void draw() = 0;
 	virtual sf::Vector2f* getPosition();
-	virtual Type getGameObjectType();
+	virtual Type getGameObjectType() const;
 protected:
 	sf::Vector2f m_Position;
 	Type m_Type;

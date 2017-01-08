@@ -60,12 +60,12 @@ void GridManager::clearValues(){
 }
 
 // Returns a random cell
-Cell* GridManager::getRandomCell(){
+Cell* GridManager::getRandomCell() const{
 	return m_GridCells[rand() % (m_GridCells.size() - 1)];
 }
 
 // Returns a random walkable cell
-Cell* GridManager::getRandomWalkableCell(){
+Cell* GridManager::getRandomWalkableCell() const {
 	Cell* cell = m_GridCells[rand() % (m_GridCells.size() - 1)];
 	while (!cell->getIsWalkable()){
 		cell = m_GridCells[rand() % (m_GridCells.size() - 1)];
@@ -74,29 +74,29 @@ Cell* GridManager::getRandomWalkableCell(){
 }
 
 // Returns the cell at the index
-Cell* GridManager::getCell(int index){
+Cell* GridManager::getCell(const int index) const {
 	return m_GridCells[index];
 }
 
 // Returns the cell at the x,y position in the grid
-Cell* GridManager::getCell(sf::Vector2f gridPos){
+Cell* GridManager::getCell(const sf::Vector2f gridPos) const {
 	return m_GridCells[gridPos.x + (gridPos.y * m_GridSize.x)];
 }
 
 // Returns the cell closest to the x,y position in the world
-Cell* GridManager::getClosestCell(sf::Vector2f worldPos){
+Cell* GridManager::getClosestCell(const sf::Vector2f worldPos) const {
 	Cell* nearestCell = nullptr;
 	float x0 = worldPos.x;
 	float y0 = worldPos.y;
 	float distance = 100000;
 
 	for (auto it : m_GridCells){
-		float x1 = it->getPosition()->x;
-		float y1 = it->getPosition()->y;
+		const float x1 = it->getPosition()->x;
+		const float y1 = it->getPosition()->y;
 		
-		float dx = x1 - x0;
-		float dy = y1 - y0;
-		float length = std::sqrt((dx*dx) + (dy*dy));
+		const float dx = x1 - x0;
+		const float dy = y1 - y0;
+		const float length = std::sqrt((dx*dx) + (dy*dy));
 		if (distance > length){
 			distance = length;
 			nearestCell = it;
@@ -107,22 +107,22 @@ Cell* GridManager::getClosestCell(sf::Vector2f worldPos){
 }
 
 // Returns the vector containg the cells
-GridManager::CellVector* GridManager::getCellVector(){
+GridManager::CellVector* GridManager::getCellVector() {
 	return &m_GridCells;
 }
 
 // Returns the number of cells
-float GridManager::getGridSize(){
+float GridManager::getGridSize() const {
 	return m_GridCells.size();
 }
 
 // Returns the width and height of the grid
-sf::Vector2f& GridManager::getGridSize2f(){
+sf::Vector2f GridManager::getGridSize2f() const {
 	return m_GridSize;
 }
 
 // Returns the width and height of a cell
-sf::Vector2f& GridManager::getCellSize(){
+sf::Vector2f GridManager::getCellSize() const {
 	if (m_GridCells.empty())
 		return sf::Vector2f(0, 0);
 	return sf::Vector2f(m_GridCells[0]->getSprite()->getLocalBounds().width,

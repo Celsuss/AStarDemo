@@ -7,7 +7,7 @@ public:
 	typedef std::vector<sf::Vector2f*>PositionVector;
 
 	static Pathfinder* getInstance();
-	PositionVector getPath(sf::Vector2f startPos, sf::Vector2f endPos);
+	PositionVector getPath(const sf::Vector2f startPos, const sf::Vector2f endPos);
 	void calculateHValues(Cell* pEndCell);
 private:
 	Pathfinder();
@@ -16,9 +16,9 @@ private:
 
 	Cell* getCellWithLowestFValue(GridManager::CellVector* pOpenList);
 	GridManager::CellVector::iterator getIteratorWithlowestFCost(GridManager::CellVector* pOpenList);
-	bool vectorContains(GridManager::CellVector* pVector, Cell* pCell);
-	float calculateGValue(Cell* pCell, int i, int j);
+	bool vectorContains(GridManager::CellVector* pVector, const Cell* pCell) const;
+	float calculateGValue(const Cell* pCell, const int i, const int j);
 	float calculateHValue(Cell* pCurrentCell, Cell* pEndCell);
-	bool indexIsInsideGrid(int index);
+	bool indexIsInsideGrid(const int index) const;
 	PositionVector* getPath(Cell* pEndCell);
 };

@@ -23,14 +23,14 @@ void MazeGenerator::createMaze(){
 	for (auto it : cells)
 		it->setIsWalkable(false);
 
-	int sizeX = (int)GridManager::getInstance()->getGridSize2f().x;
-	int sizeY = (int)GridManager::getInstance()->getGridSize2f().y;
-	int posX = std::rand() % sizeX;
-	int posY = std::rand() % (int)GridManager::getInstance()->getGridSize2f().y;
+	const int sizeX = (int)GridManager::getInstance()->getGridSize2f().x;
+	const int sizeY = (int)GridManager::getInstance()->getGridSize2f().y;
+	const int posX = std::rand() % sizeX;
+	const int posY = std::rand() % (int)GridManager::getInstance()->getGridSize2f().y;
 	cells[posX + (posY * sizeX)]->setIsWalkable(true);
 	buildMaze(sf::Vector2i(posX, posY), cells);
 
-	int ms = clock.getElapsedTime().asMilliseconds();
+	const int ms = clock.getElapsedTime().asMilliseconds();
 	std::cout << "Pathfinding took " << ms << "ms" << std::endl;
 }
 
@@ -102,7 +102,7 @@ void MazeGenerator::buildMaze(sf::Vector2i pos, GridManager::CellVector& cells){
 }
 
 // Returns true if directions contain dir
-bool MazeGenerator::vectorContains(const Direction& dir, const DirectionVector& directions){
+bool MazeGenerator::vectorContains(const Direction& dir, const DirectionVector& directions) const {
 	for (auto it : directions)
 		if (it == dir)
 			return true;

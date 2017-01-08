@@ -1,65 +1,33 @@
-﻿Build started 2016-06-19 14:01:46.
-     1>Project "C:\Users\Tess\Documents\GitHub\AStarDemo\AStar Pathfinder\AStar Pathfinder.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Tess\Documents\GitHub\AStarDemo\/SFML-2.1/include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt AI.cpp Game.cpp GameObject.cpp Goal.cpp GraphicManager.cpp GridManager.cpp GridNode.cpp Main.cpp Pathfinder.cpp TextureManager.cpp Wall.cpp
-         AI.cpp
-         Game.cpp
-     1>Game.cpp(85): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>Game.cpp(90): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>Game.cpp(96): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
-         GameObject.cpp
-         Goal.cpp
-         GraphicManager.cpp
-         GridManager.cpp
-     1>GridManager.cpp(20): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>GridManager.cpp(26): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(27): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(28): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(63): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
-     1>GridManager.cpp(64): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
-     1>GridManager.cpp(75): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
-     1>GridManager.cpp(76): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
-     1>GridManager.cpp(78): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(79): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(80): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(81): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(83): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(84): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(85): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(86): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(119): warning C4244: 'argument' : conversion from 'float' to 'unsigned __int64', possible loss of data
-     1>GridManager.cpp(155): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(157): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(158): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(159): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(160): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(163): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(164): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(165): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>GridManager.cpp(166): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-         GridNode.cpp
-         Main.cpp
-         Pathfinder.cpp
-     1>Pathfinder.cpp(41): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>Pathfinder.cpp(42): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-         TextureManager.cpp
-         Wall.cpp
-     1>Wall.cpp(8): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tess\Documents\GitHub\AStarDemo\x64\Release\AStar Pathfinder.exe" /NOLOGO /LIBPATH:"C:\Users\Tess\Documents\GitHub\AStarDemo\/SFML-2.1/lib" "sfml-graphics.lib" "sfml-window.lib" "sfml-system.lib" "sfml-audio.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tess\Documents\GitHub\AStarDemo\x64\Release\AStar Pathfinder.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tess\Documents\GitHub\AStarDemo\x64\Release\AStar Pathfinder.lib" /MACHINE:X64 x64\Release\AI.obj
-         x64\Release\Game.obj
-         x64\Release\GameObject.obj
-         x64\Release\Goal.obj
-         x64\Release\GraphicManager.obj
-         x64\Release\GridManager.obj
-         x64\Release\GridNode.obj
-         x64\Release\Main.obj
-         x64\Release\Pathfinder.obj
-         x64\Release\TextureManager.obj
-         x64\Release\Wall.obj
-     1>LINK : fatal error LNK1181: cannot open input file 'sfml-graphics.lib'
-     1>Done Building Project "C:\Users\Tess\Documents\GitHub\AStarDemo\AStar Pathfinder\AStar Pathfinder.vcxproj" (Build target(s)) -- FAILED.
-
-Build FAILED.
-
-Time Elapsed 00:00:08.28
+﻿  AI.cpp
+  Cell.cpp
+  Game.cpp
+Game.cpp(121): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+Game.cpp(142): warning C4244: '=': conversion from 'sf::Int32' to 'float', possible loss of data
+  GameObject.cpp
+  Goal.cpp
+  GraphicManager.cpp
+  GridManager.cpp
+GridManager.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+GridManager.cpp(27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+GridManager.cpp(28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+GridManager.cpp(29): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+GridManager.cpp(83): warning C4244: 'argument': conversion from 'float' to 'unsigned __int64', possible loss of data
+GridManager.cpp(116): warning C4244: 'return': conversion from 'unsigned __int64' to 'float', possible loss of data
+  Main.cpp
+  MazeGenerator.cpp
+  Pathfinder.cpp
+Pathfinder.cpp(36): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+Pathfinder.cpp(49): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+Pathfinder.cpp(52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+Pathfinder.cpp(59): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+Pathfinder.cpp(150): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  TextureManager.cpp
+  Generating code
+c:\users\celsuss\documents\github\astardemo\astar pathfinder\gridmanager.cpp(127): warning C4172: returning address of local variable or temporary
+c:\users\celsuss\documents\github\astardemo\astar pathfinder\gridmanager.cpp(128): warning C4172: returning address of local variable or temporary
+  39 of 778 functions ( 5.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    13 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  AStar Pathfinder.vcxproj -> C:\Users\Celsuss\Documents\GitHub\AStarDemo\x64\Release\AStar Pathfinder.exe
+  AStar Pathfinder.vcxproj -> C:\Users\Celsuss\Documents\GitHub\AStarDemo\x64\Release\AStar Pathfinder.pdb (Full PDB)

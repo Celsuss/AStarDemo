@@ -19,7 +19,7 @@ Pathfinder* Pathfinder::getInstance(){
 // Calculates the path to the goal from the AI using the A* algorithm.
 // Returns a sf::vector2f vector where all elements represent the
 // position of a Cell.
-Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector2f endPos){
+Pathfinder::PositionVector Pathfinder::getPath(const sf::Vector2f startPos, const sf::Vector2f endPos){
 	sf::Clock clock;
 	Cell* endCell = GridManager::getInstance()->getClosestCell(endPos);
 	GridManager::CellVector openList;
@@ -62,7 +62,7 @@ Pathfinder::PositionVector Pathfinder::getPath(sf::Vector2f startPos, sf::Vector
 
 	PositionVector* path = getPath(endCell);
 
-	int ms = clock.getElapsedTime().asMilliseconds();
+	const int ms = clock.getElapsedTime().asMilliseconds();
 	std::cout << "Pathfinding took " << ms << "ms" << std::endl;
 
 	GridManager::getInstance()->clearValues();
@@ -112,7 +112,7 @@ GridManager::CellVector::iterator Pathfinder::getIteratorWithlowestFCost(GridMan
 }
 
 // Returns true if the current cell is in the closed list
-bool Pathfinder::vectorContains(GridManager::CellVector* pVector, Cell* pCell){
+bool Pathfinder::vectorContains(GridManager::CellVector* pVector, const Cell* pCell) const {
 	if (pVector->empty())
 		return false;
 
@@ -125,7 +125,7 @@ bool Pathfinder::vectorContains(GridManager::CellVector* pVector, Cell* pCell){
 
 // Calculates the G value of a cell.
 // The G value is the move cost to move to this cell.
-float Pathfinder::calculateGValue(Cell* pCell, int i, int j){
+float Pathfinder::calculateGValue(const Cell* pCell, const int i, const int j){
 	float gCost = 10;
 	if (i != 1 && j != 1)
 		gCost = 14;
@@ -146,8 +146,8 @@ float Pathfinder::calculateHValue(Cell* pCurrentCell, Cell* pEndCell){
 
 // Checks if the index inside the grid.
 // If it is, return true else return false
-bool Pathfinder::indexIsInsideGrid(int index){
-	int size = GridManager::getInstance()->getGridSize2f().x * GridManager::getInstance()->getGridSize2f().y;
+bool Pathfinder::indexIsInsideGrid(const int index) const {
+	const int size = GridManager::getInstance()->getGridSize2f().x * GridManager::getInstance()->getGridSize2f().y;
 	if (index >= size || index < 0)
 		return false;
 	return true;

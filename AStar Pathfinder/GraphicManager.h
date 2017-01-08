@@ -11,19 +11,15 @@ public:
 	void initialize();
 	void update();
 
-	void draw(sf::Text& text);
-	void draw(sf::Sprite& sprite);
-	void draw(sf::RectangleShape& rectangleShape);
+	void draw(const sf::Text& text);
+	void draw(const sf::Sprite& sprite);
+	void draw(const sf::RectangleShape& rectangleShape);
 	sf::RenderWindow* getWindow();
 	sf::Font* getFont();
 private:
 	GraphicManager();
 	~GraphicManager();
 	static GraphicManager* m_Instance;
-
-	void drawBackGround();
-	void drawNormalGround();
-	void drawForeGround();
 
 	sf::Font m_Font;
 	sf::RenderWindow m_Window;

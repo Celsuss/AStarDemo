@@ -7,17 +7,16 @@
 class TextureManager{
 public:
 	typedef std::map<std::string, sf::Texture*> TextureMap;
-	//typedef std::map<std::string, std::shared_ptr<sf::Texture>> TextureMap;
 
 	static TextureManager* getInstance();
 
-	sf::Texture* getTexture(std::string name);
+	sf::Texture* getTexture(const std::string name);
 private:
 	TextureManager();
 	~TextureManager();
 	static TextureManager* m_Instance;
 
-	bool loadTexture(std::string name);
+	bool loadTexture(const std::string name);
 
 	TextureMap m_Textures;
 };

@@ -23,6 +23,6 @@ private:
 	static MazeGenerator* m_Instance;
 
 	void buildMaze(sf::Vector2i pos, GridManager::CellVector& cells);
-	bool vectorContains(const Direction& dir, const DirectionVector& directions);
+	bool vectorContains(const Direction& dir, const DirectionVector& directions) const;
 };
 

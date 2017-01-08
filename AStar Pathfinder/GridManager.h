@@ -14,15 +14,15 @@ public:
 	void initialize();
 	void update();
 	void clearValues();
-	Cell* getRandomCell();
-	Cell* getRandomWalkableCell();
-	Cell* getCell(int index);
-	Cell* getCell(sf::Vector2f gridPos);
-	Cell* getClosestCell(sf::Vector2f worldPos);
+	Cell* getRandomCell() const;
+	Cell* getRandomWalkableCell() const;
+	Cell* getCell(const int index) const;
+	Cell* getCell(const sf::Vector2f gridPos) const;
+	Cell* getClosestCell(const sf::Vector2f worldPos) const;
 	CellVector* getCellVector();
-	float getGridSize();
-	sf::Vector2f& getGridSize2f();
-	sf::Vector2f& getCellSize();
+	float getGridSize() const;
+	sf::Vector2f getGridSize2f() const;
+	sf::Vector2f getCellSize() const;
 private:
 	GridManager();
 	~GridManager();

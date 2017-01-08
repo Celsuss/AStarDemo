@@ -3,7 +3,7 @@
 #include "TextureManager.h"
 #include "GraphicManager.h"
 
-AI::AI(sf::Vector2f pos, sf::Vector2f targetPos){
+AI::AI(const sf::Vector2f pos, const sf::Vector2f targetPos){
 	m_Type = Type::AI;
 	m_Position = pos;
 	m_pSprite = new sf::Sprite(*TextureManager::getInstance()->getTexture("AI"));

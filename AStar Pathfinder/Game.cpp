@@ -62,12 +62,12 @@ void Game::initialize(){
 void Game::initializeText(){
 	m_Text.setFont(*GraphicManager::getInstance()->getFont());
 	m_Text.setCharacterSize(24);
-	m_Text.setColor(sf::Color::White);
+	m_Text.setFillColor(sf::Color::White);
 	m_Text.setString("Press 'R' to restart, 'D' to show/hide debugging help");
 
 	m_DTimerText.setFont(*GraphicManager::getInstance()->getFont());
 	m_DTimerText.setCharacterSize(12);
-	m_DTimerText.setColor(sf::Color::White);
+	m_DTimerText.setFillColor(sf::Color::White);
 	m_DTimerText.setString("0");
 }
 
@@ -84,12 +84,13 @@ Game::GameObjectVector* Game::getGameObjects(){
 }
 
 // Returns the Goal object
-Goal* Game::getGoal(){
+Goal* Game::getGoal() const {
 	for (auto it : m_GameObjects){;
 		if (it->getGameObjectType() == GameObject::Type::Goal){
 			return (Goal*)it;
 		}
 	}
+	return nullptr;
 }
 
 // Returns true if debugging is true else return false
